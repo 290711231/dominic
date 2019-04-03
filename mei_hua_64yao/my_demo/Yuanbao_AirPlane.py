@@ -21,7 +21,21 @@ class HeroPlane(object):
         self.w, self.h = self.rotationHeroplane.get_size()
         self.draw_pos = Vector2(self.pos.x - self.w / 2, self.pos.y - self.h / 2)
 
+    def moveleft(self):
+        print('left')
+        self.draw_pos.x -= 3
 
+    def moveright(self):
+        print('right')
+        self.draw_pos.x += 3
+
+    def moveup(self):
+        print('up')
+        self.draw_pos.y -= 3
+
+    def movedown(self):
+        print('down')
+        self.draw_pos.y += 3
 
     def dispaly(self):
         self.screen.blit(self.rotationHeroplane, self.draw_pos)
@@ -39,21 +53,17 @@ def keyControl(HeroPlane):
     movement_dirction = 0
 
     if key[K_LEFT] or key[K_a]:
-        print('left')
         rotation_dirction = +1
-        HeroPlane.draw_pos.x -= 3
+        HeroPlane.moveleft()
     elif key[K_RIGHT] or key[K_d]:
-        print('right')
         rotation_dirction = -1
-        HeroPlane.draw_pos.x += 3
+        HeroPlane.moveright()
     elif key[K_DOWN] or key[K_s]:
-        print('down')
         movement_dirction = -1
-        HeroPlane.draw_pos.y += 3
+        HeroPlane.movedown()
     elif key[K_UP] or key[K_w]:
-        print('up')
         movement_dirction = +1
-        HeroPlane.draw_pos.y -= 3
+        HeroPlane.moveup()
     elif keys_lu:
         print('keys_lu')
         HeroPlane.pos.y -= 0.5
