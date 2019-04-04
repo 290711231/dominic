@@ -1,31 +1,38 @@
-# Father and son's first project
-#-----YuanBao AirPlane War-----
+# **Father and son's first project** #
+---
+## -----YuanBao AirPlane War----- ##
+---
 
-This is a bunch of code for a little game I wrote for my son.\n\n
+This is a bunch of code for a little game I wrote for my son.
 
-It's seem like everyone's first game object is airplane war....\n\n
+It's seem like everyone's first game object is airplane war....
 
-Mine just is it!!\n\n
+Mine just is it!!
 
-I'v been learning Python for some times.\n
-I just want to learn some Web crawler techniques ,and then analyze some art data...\n
-But now...\n\n
+I'v been learning Python for some times.
 
-Any way...\n\n
+I just want to learn some Web crawler techniques ,and then analyze some art data...
 
-I'm a happy dad.So, my son will be a happy kids!\n\n
+But now...
 
-So, I just wrote ths little game with my pool techniques...\n\n
+Any way...
 
-In a few days,I want replace image in it with my son's paintings,which is what he wants most.\n\n
+I'm a happy dad.So, my son will be a happy kids!
 
-May be...\n\n
+So, I just wrote ths little game with my pool techniques...
 
+In a few days,I want replace image in it with my son's paintings,which is what he wants most.
 
-A happy dad:Dominic Was\n
-A happy son:Da Yuan Bao\n
-A Pretty mama:Liang Jin\n\n
+May be...
 
-Father and son's first project cooperation happy!\n\n
+---
+A happy dad:Dominic Was
 
-2019-4-4\n\n
+A happy son:Da Yuan Bao
+
+A Pretty mama:Liang Jin
+
+---
+###Father and son's first project cooperation happy!###
+---
+2019-4-4
