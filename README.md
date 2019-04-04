@@ -1,4 +1,4 @@
-# **Father and son's first project** #
+# **The first project with dad & son** #
 ---
 ## -----YuanBao AirPlane War----- ##
 ---
