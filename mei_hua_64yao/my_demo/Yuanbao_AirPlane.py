@@ -7,6 +7,7 @@ from math import *
 import random
 
 
+
 class HeroPlane(object):
     def __init__(self, screen_temp):
         self.screen = screen_temp
@@ -39,6 +40,13 @@ class HeroPlane(object):
 
     def dispaly(self):
         self.screen.blit(self.rotationHeroplane, self.draw_pos)
+
+class bullet(object):
+    def __init__(self, screen_temp):
+        self.screen = screen_temp
+        self.x = HeroPlane.draw_pos.x
+        self.y = 200
+        self.image = pygame.image.load("./image/myplane.gif").convert_alpha()
 
 def keyControl(HeroPlane):
     for event in pygame.event.get():
