@@ -1,4 +1,5 @@
-# dominic
+# Father and son's first project
+#-----YuanBao AirPlane War-----
 
 This is a bunch of code for a little game I wrote for my son.
 
@@ -26,4 +27,5 @@ A happy son:Da Yuan Bao
 A Pretty mama:Liang Jin
 
 Father and son's first project cooperation happy!
+
 2019-4-4
