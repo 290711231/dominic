@@ -21,6 +21,8 @@ class HeroPlane(object):
         self.rotationHeroplane = pygame.transform.rotate(self.image, self.rotation)
         self.w, self.h = self.rotationHeroplane.get_size()
         self.draw_pos = Vector2(self.pos.x - self.w / 2, self.pos.y - self.h / 2)
+        self.Herobullet=Bullet(screen_temp,self.draw_pos.x,self.draw_pos.y)
+        self.bullet_list = []
 
     def moveleft(self):
         print('left')
@@ -38,15 +40,35 @@ class HeroPlane(object):
         print('down')
         self.draw_pos.y += 3
 
+    def fire(self):
+        print('fire')
+        self.bullet_list.append(Bullet(self.screen,self.draw_pos.x,self.draw_pos.y))
+
     def dispaly(self):
         self.screen.blit(self.rotationHeroplane, self.draw_pos)
 
-class bullet(object):
-    def __init__(self, screen_temp):
+        for bullet in self.bullet_list:
+            self.Herobullet.dispaly()
+            self.Herobullet.move()
+
+class Bullet(object):
+    def __init__(self, screen_temp,x,y):
         self.screen = screen_temp
-        self.x = HeroPlane.draw_pos.x
-        self.y = 200
-        self.image = pygame.image.load("./image/myplane.gif").convert_alpha()
+        self.x = x+110-8#Hero.draw_pos.x+110-8
+        self.y = y+15#Hero.draw_pos.y-6#
+        self.image = pygame.image.load(self.image_temp())
+    def image_temp(self):
+        animationnum =1
+        for a in range(70):
+            if a%10 ==0:
+                animationnum += 1
+                return "./image/bullet_%d.png"%animationnum
+            elif a == 70:
+                return "./image/bullet_7.png"
+    def dispaly(self):
+        self.screen.blit(self.image, (self.x,self.y))
+    def move(self):
+        self.x += 0.5
 
 def keyControl(HeroPlane):
     for event in pygame.event.get():
@@ -72,6 +94,8 @@ def keyControl(HeroPlane):
     elif key[K_UP] or key[K_w]:
         movement_dirction = +1
         HeroPlane.moveup()
+    elif key[K_SPACE]:
+        HeroPlane.fire()
     elif keys_lu:
         print('keys_lu')
         HeroPlane.pos.y -= 0.5

@@ -1,74 +1,28 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-
-sprite_image_filename = 'fugu.png'
-
 import pygame
 from pygame.locals import *
+import time
 from sys import exit
 from gameobjects.vector2 import Vector2
 from math import *
+import random
 
-pygame.init()
+def main():
+    animationnum = 0
+    for a in range(70):
+        if a % 10 == 0:
+            animationnum += 1
+            image = pygame.image.load("./image/bullet_%d.png" % animationnum)
+        elif a == 70:
+            image = pygame.image.load("./image/bullet_7.png")
 
-screen = pygame.display.set_mode((640, 480), 0, 32)
+    while True:
+        screen = pygame.display.set_mode((800, 450), 0, 0, 0)
+        backgroud = pygame.image.load("./image/backgroud.jpg").convert()
+        screen.blit(backgroud, (0, 0))
+        screen.blit(image, (200, 200))
 
-background = pygame.image.load('./image/backgroud.jpg').convert()
-sprite = pygame.image.load('./image/myplane.gif').convert_alpha()
 
-clock = pygame.time.Clock()
 
-sprite_pos = Vector2(200, 150)  # 初始位置
-sprite_speed = 300.  # 每秒前进的像素数（速度）
-sprite_rotation = 0.  # 初始角度
-sprite_rotation_speed = 360.  # 每秒转动的角度数（转速）
 
-while True:
-
-    for event in pygame.event.get():
-        if event.type == QUIT:
-            exit()
-
-    pressed_keys = pygame.key.get_pressed()
-
-    rotation_direction = 0.
-    movement_direction = 0.
-
-    # 更改角度
-    if pressed_keys[K_LEFT]:
-        rotation_direction = +1.
-    if pressed_keys[K_RIGHT]:
-        rotation_direction = -1.
-    # 前进、后退
-    if pressed_keys[K_UP]:
-        movement_direction = +1.
-    if pressed_keys[K_DOWN]:
-        movement_direction = -1.
-
-    screen.blit(background, (0, 0))
-
-    # 获得一条转向后的鱼
-    rotated_sprite = pygame.transform.rotate(sprite, sprite_rotation)
-    # 转向后，图片的长宽会变化，因为图片永远是矩形，为了放得下一个转向后的矩形，外接的矩形势必会比较大
-    w, h = rotated_sprite.get_size()
-    # 获得绘制图片的左上角（感谢pltc325网友的指正）
-    sprite_draw_pos = Vector2(sprite_pos.x - w / 2, sprite_pos.y - h / 2)
-    screen.blit(rotated_sprite, sprite_draw_pos)
-
-    time_passed = clock.tick()
-    time_passed_seconds = time_passed / 1000.0
-
-    # 图片的转向速度也需要和行进速度一样，通过时间来控制
-    sprite_rotation += rotation_direction * sprite_rotation_speed * time_passed_seconds
-
-    # 获得前进（x方向和y方向），这两个需要一点点三角的知识
-    heading_x = sin(sprite_rotation * pi / 180.)
-    heading_y = cos(sprite_rotation * pi / 180.)
-    # 转换为单位速度向量
-    heading = Vector2(heading_x, heading_y)
-    # 转换为速度
-    heading *= movement_direction
-
-    sprite_pos += heading * sprite_speed * time_passed_seconds
-
-    pygame.display.update()
+if __name__ == "__main__":
+    main()
