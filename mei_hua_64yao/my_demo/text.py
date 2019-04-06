@@ -1,74 +1,171 @@
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-
-sprite_image_filename = 'fugu.png'
-
 import pygame
 from pygame.locals import *
+import time
 from sys import exit
 from gameobjects.vector2 import Vector2
 from math import *
+import random
 
-pygame.init()
 
-screen = pygame.display.set_mode((640, 480), 0, 32)
+class Backgroud(object):
+    def __init__(self, screen_temp):
+        #self.cloud_x=800
+        #self.cloud_y=random.randint(45, 300)
+        self.screen = screen_temp
+        self.image = pygame.image.load("./image/backgroud.jpg").convert()
+        self.cloud = Cloud(screen_temp)
+        self.cloud_list = []
 
-background = pygame.image.load('./image/backgroud.jpg').convert()
-sprite = pygame.image.load('./image/myplane.gif').convert_alpha()
+    def display(self):
+        self.screen.blit(self.image, (0, 0))
+        i = random.randint(1,100)
+        if i == 40 or i == 50:
+            self.cloud_list.append(self.cloud)
 
-clock = pygame.time.Clock()
+        for cloud_i in self.cloud_list:
+             cloud_i.display()
+             cloud_i.move()
+             if cloud_i.judge():
+                 self.cloud_list.remove(cloud_i)
 
-sprite_pos = Vector2(200, 150)  # 初始位置
-sprite_speed = 300.  # 每秒前进的像素数（速度）
-sprite_rotation = 0.  # 初始角度
-sprite_rotation_speed = 360.  # 每秒转动的角度数（转速）
 
-while True:
 
+
+
+class HeroPlane(object):
+    def __init__(self, screen_temp):
+        self.screen = screen_temp
+        self.x = 0
+        self.y = 200
+        self.image = pygame.image.load('./image/myplane.gif')
+        self.Herobullet = Bullet(screen_temp, self.x, self .y)
+        self.bullet_list = [Bullet(self.screen,self.x,self.y)]*10
+
+    def moveleft(self):
+        print('left     %d' % self.x)
+        self.x -= 3
+
+    def moveright(self):
+        print('right    %d' % self.x)
+        self.x += 3
+
+    def moveup(self):
+        print('up   %d' % self.y)
+        self.y -= 3
+
+    def movedown(self):
+        print('down     %d' % self.y)
+        self.y += 3
+
+    def fire(self):
+        print('fire  x=%d   y=%d' % (self.x, self.y))
+        print(self.bullet_list)
+        self.bullet_list.append(Bullet(self.screen, self.x, self.y))
+
+    def dispaly(self):
+        self.screen.blit(self.image, (self.x, self.y))
+        for bullettemp in self.bullet_list:
+            bullettemp.dispaly()
+            bullettemp.move()
+            if bullettemp.judge():
+                self.bullet_list.remove(bullettemp)
+
+class Bullet(object):
+    def __init__(self, screen_temp, x, y):
+        self.screen = screen_temp
+        self.x = x + 70 - 8
+        self.y = y + 15
+        self.image = pygame.image.load("./image/bullet_7.png")
+
+    def dispaly(self):
+        self.screen.blit(self.image, (self.x, self.y))
+
+    def move(self):
+        self.x += 10
+
+
+    def judge(self):
+        if self.x > 850:
+            return True
+        else:
+            return False
+
+
+class Cloud(object):
+    def __init__(self, screen_temp):
+        self.screen = screen_temp
+        self.x = 800
+        self.y = 45
+        self.image = pygame.image.load('./image/cloud.png').convert_alpha()
+        self.random_size = random.uniform(0.5, 0.7)
+        self.cloud_speed = int(10 * self.random_size) - 4
+        self.tempNum = self.random_size
+        self.transform = pygame.transform.smoothscale(self.image, (int(562 * self.tempNum), int(432 * self.tempNum)))
+        self.cloud_list = []
+
+    def display(self):
+        self.y = random.randint(45,200)
+        self.screen.blit(self.transform, (self.x, self.y))
+        print('cloud be display')
+
+    def move(self):
+        self.x -= self.cloud_speed
+        print('cloud x=%d  y=%d'%(self.x,self.y))
+
+    def judge(self):
+        if self.x < -570:
+            return True
+        else:
+            return False
+
+
+def keyControl(HeroPlane):
     for event in pygame.event.get():
         if event.type == QUIT:
+            print('quit')
             exit()
+        elif event.type == KEYDOWN:
+            if event.key == K_SPACE:
+                HeroPlane.fire()
 
-    pressed_keys = pygame.key.get_pressed()
+    key = pygame.key.get_pressed()
 
-    rotation_direction = 0.
-    movement_direction = 0.
+    if key[K_LEFT] or key[K_a]:
+        HeroPlane.moveleft()
+    elif key[K_RIGHT] or key[K_d]:
+        HeroPlane.moveright()
+    elif key[K_DOWN] or key[K_s]:
+        HeroPlane.movedown()
+    elif key[K_UP] or key[K_w]:
+        HeroPlane.moveup()
+    #elif key[K_SPACE]:
+    #    HeroPlane.fire()
 
-    # 更改角度
-    if pressed_keys[K_LEFT]:
-        rotation_direction = +1.
-    if pressed_keys[K_RIGHT]:
-        rotation_direction = -1.
-    # 前进、后退
-    if pressed_keys[K_UP]:
-        movement_direction = +1.
-    if pressed_keys[K_DOWN]:
-        movement_direction = -1.
 
-    screen.blit(background, (0, 0))
+    if HeroPlane.x < 0:
+        HeroPlane.x = 0
+    elif HeroPlane.x > 690:
+        HeroPlane.x = 690
 
-    # 获得一条转向后的鱼
-    rotated_sprite = pygame.transform.rotate(sprite, sprite_rotation)
-    # 转向后，图片的长宽会变化，因为图片永远是矩形，为了放得下一个转向后的矩形，外接的矩形势必会比较大
-    w, h = rotated_sprite.get_size()
-    # 获得绘制图片的左上角（感谢pltc325网友的指正）
-    sprite_draw_pos = Vector2(sprite_pos.x - w / 2, sprite_pos.y - h / 2)
-    screen.blit(rotated_sprite, sprite_draw_pos)
+    elif HeroPlane.y < 0:
+        HeroPlane.y = 0  #
+    elif HeroPlane.y > 402:
+        HeroPlane.y = 402
 
-    time_passed = clock.tick()
-    time_passed_seconds = time_passed / 1000.0
 
-    # 图片的转向速度也需要和行进速度一样，通过时间来控制
-    sprite_rotation += rotation_direction * sprite_rotation_speed * time_passed_seconds
+def main():
+    screen = pygame.display.set_mode((800, 450), 0, 0, 0)
+    backgroud = Backgroud(screen)
+    hero = HeroPlane(screen)
+    i = 0
+    while True:
+        i+=1
+        keyControl(hero)
+        backgroud.display()
+        hero.dispaly()
+        pygame.display.update()
+        time.sleep(0.01)
 
-    # 获得前进（x方向和y方向），这两个需要一点点三角的知识
-    heading_x = sin(sprite_rotation * pi / 180.)
-    heading_y = cos(sprite_rotation * pi / 180.)
-    # 转换为单位速度向量
-    heading = Vector2(heading_x, heading_y)
-    # 转换为速度
-    heading *= movement_direction
 
-    sprite_pos += heading * sprite_speed * time_passed_seconds
-
-    pygame.display.update()
+if __name__ == "__main__":
+    main()

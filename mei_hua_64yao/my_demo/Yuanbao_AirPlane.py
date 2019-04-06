@@ -7,158 +7,194 @@ from math import *
 import random
 
 
+class Backgroud(object):
+    def __init__(self, screen_temp):
+        self.cloud_x = 800
+        self.cloud_y = random.randint(45, 300)
+        self.screen = screen_temp
+        self.image = pygame.image.load("./image/backgroud.jpg").convert()
+        self.bgimage_1 = Backgroud_1(self.screen)
+        self.cloud = Cloud(screen_temp, self.cloud_x, self.cloud_y)
+        self.cloud_list = []
+        self.backgroudlist_1 = []
+        self.backgroudlist_2 = []
+
+
+    def display(self):
+        self.screen.blit(self.image, (0, 0))
+        #self.screen.blit(self.bgimage_1.image,(0,47))
+        #self.bgimage_1.move()
+
+        self.bgimage_1.display()
+        self.bgimage_1.move()
+
+
+
+        i = random.randint(1, 300)
+        if i == 40:
+            self.cloud_list.append(Cloud(self.screen, self.cloud_x, self.cloud_y))
+
+        for cloud_i in self.cloud_list:
+            cloud_i.display()
+            cloud_i.move()
+            if cloud_i.judge():
+                self.cloud_list.remove(cloud_i)
+                print('____________cloud be remove____________')
+
+class Backgroud_1(object):
+    def __init__(self, screen_temp):
+        self.screen = screen_temp
+        self.x = 0
+        self.y = 238
+        self.image = pygame.image.load('./image/backgroud_1.png').convert_alpha()
+        self.speed = 1
+
+    def display(self):
+        self.screen.blit(self.image, (self.x, self.y))
+        print('backgroud_1 be display')
+
+    def move(self):
+        self.x -= self.speed
+        print('now x is %d'%self.x)
+
+    def judge(self):
+        if self.x < -510:
+            return True
+        else:
+            return False
 
 class HeroPlane(object):
     def __init__(self, screen_temp):
         self.screen = screen_temp
         self.x = 0
         self.y = 200
-        self.image = pygame.image.load("./image/myplane.gif").convert_alpha()
-        self.pos = Vector2(self.x, self.y)
-        self.speed = 300
-        self.rotation = 1
-        self.rotationspeed = 360
-        self.rotationHeroplane = pygame.transform.rotate(self.image, self.rotation)
-        self.w, self.h = self.rotationHeroplane.get_size()
-        self.draw_pos = Vector2(self.pos.x - self.w / 2, self.pos.y - self.h / 2)
-        self.Herobullet=Bullet(screen_temp,self.draw_pos.x,self.draw_pos.y)
-        self.bullet_list = []
+        self.image = pygame.image.load('./image/myplane.gif')
+        self.Herobullet = Bullet(screen_temp, self.x, self.y)
+        self.bullet_list = [Bullet(self.screen, self.x, self.y)] * 10
 
     def moveleft(self):
-        print('left')
-        self.draw_pos.x -= 3
+        print('left     %d' % self.x)
+        self.x -= 3
 
     def moveright(self):
-        print('right')
-        self.draw_pos.x += 3
+        print('right    %d' % self.x)
+        self.x += 3
 
     def moveup(self):
-        print('up')
-        self.draw_pos.y -= 3
+        print('up   %d' % self.y)
+        self.y -= 3
 
     def movedown(self):
-        print('down')
-        self.draw_pos.y += 3
+        print('down     %d' % self.y)
+        self.y += 3
 
     def fire(self):
-        print('fire')
-        self.bullet_list.append(Bullet(self.screen,self.draw_pos.x,self.draw_pos.y))
+        print('fire  x=%d   y=%d' % (self.x, self.y))
+        print(self.bullet_list)
+        self.bullet_list.append(Bullet(self.screen, self.x, self.y))
 
     def dispaly(self):
-        self.screen.blit(self.rotationHeroplane, self.draw_pos)
+        self.screen.blit(self.image, (self.x, self.y))
+        for bullettemp in self.bullet_list:
+            bullettemp.dispaly()
+            bullettemp.move()
+            if bullettemp.judge():
+                self.bullet_list.remove(bullettemp)
 
-        for bullet in self.bullet_list:
-            self.Herobullet.dispaly()
-            self.Herobullet.move()
 
 class Bullet(object):
-    def __init__(self, screen_temp,x,y):
+    def __init__(self, screen_temp, x, y):
         self.screen = screen_temp
-        self.x = x+110-8#Hero.draw_pos.x+110-8
-        self.y = y+15#Hero.draw_pos.y-6#
-        self.image = pygame.image.load(self.image_temp())
-    def image_temp(self):
-        animationnum =1
-        for a in range(70):
-            if a%10 ==0:
-                animationnum += 1
-                return "./image/bullet_%d.png"%animationnum
-            elif a == 70:
-                return "./image/bullet_7.png"
+        self.x = x + 70 - 8
+        self.y = y + 15
+        self.image = pygame.image.load("./image/bullet_7.png")
+
     def dispaly(self):
-        self.screen.blit(self.image, (self.x,self.y))
+        self.screen.blit(self.image, (self.x, self.y))
+
     def move(self):
-        self.x += 0.5
+        self.x += 10
+
+    def judge(self):
+        if self.x > 850:
+            return True
+        else:
+            return False
+
+
+class Cloud(object):
+    def __init__(self, screen_temp, x, y):
+        self.screen = screen_temp
+        self.x = x
+        self.y = y
+        self.image = pygame.image.load('./image/cloud.png').convert_alpha()
+        self.random_size = random.uniform(0.5, 0.7)
+        self.cloud_speed = int(10 * self.random_size) - 4
+        self.tempNum = self.random_size
+        self.transform = pygame.transform.smoothscale(self.image, (int(562 * self.tempNum), int(432 * self.tempNum)))
+        self.cloud_list = []
+
+    def display(self):
+        self.screen.blit(self.transform, (self.x, self.y))
+        print('cloud be display')
+
+    def move(self):
+        self.x -= self.cloud_speed
+        print('cloud x=%d  y=%d' % (self.x, self.y))
+
+    def judge(self):
+        if self.x < -360:
+            return True
+        else:
+            return False
+
 
 def keyControl(HeroPlane):
     for event in pygame.event.get():
         if event.type == QUIT:
             print('quit')
             exit()
+        elif event.type == KEYDOWN:
+            if event.key == K_SPACE:
+                HeroPlane.fire()
 
     key = pygame.key.get_pressed()
-    keys_lu = pygame.key.set_mods(K_LEFT | K_UP)
-
-    rotation_dirction = 0
-    movement_dirction = 0
 
     if key[K_LEFT] or key[K_a]:
-        rotation_dirction = +1
         HeroPlane.moveleft()
     elif key[K_RIGHT] or key[K_d]:
-        rotation_dirction = -1
         HeroPlane.moveright()
     elif key[K_DOWN] or key[K_s]:
-        movement_dirction = -1
         HeroPlane.movedown()
     elif key[K_UP] or key[K_w]:
-        movement_dirction = +1
         HeroPlane.moveup()
-    elif key[K_SPACE]:
-        HeroPlane.fire()
-    elif keys_lu:
-        print('keys_lu')
-        HeroPlane.pos.y -= 0.5
-        HeroPlane.pos.x -= 0.5
-    clock = pygame.time.Clock()
-    time_passed = clock.tick()
-    time_passed_seconds = time_passed / 1000.0
-    HeroPlane.rotation += rotation_dirction * HeroPlane.rotationspeed * time_passed_seconds
+    # elif key[K_SPACE]:
+    #    HeroPlane.fire()
 
-    # 获得前进（x方向和y方向）
-    heading_x = sin(HeroPlane.rotation * pi / 180.)
-    heading_y = cos(HeroPlane.rotation * pi / 180.)
-    # 转换为单位速度向量
-    heading = Vector2(heading_x, heading_y)
-    # 转换为速度
-    heading *= movement_dirction
+    if HeroPlane.x < 0:
+        HeroPlane.x = 0
+    elif HeroPlane.x > 690:
+        HeroPlane.x = 690
 
-    HeroPlane.pos += heading * HeroPlane.speed * time_passed_seconds
+    elif HeroPlane.y < 0:
+        HeroPlane.y = 0  #
+    elif HeroPlane.y > 402:
+        HeroPlane.y = 402
 
-    if HeroPlane.draw_pos.x < 0:
-        HeroPlane.draw_pos.x = 0
-    elif HeroPlane.draw_pos.x > 690:
-        HeroPlane.draw_pos.x = 690
-
-    elif HeroPlane.draw_pos.y < 0:
-        HeroPlane.draw_pos.y = 0#
-    elif HeroPlane.draw_pos.y > 402:
-        HeroPlane.draw_pos.y = 402
 
 def main():
-    # make a window
-    screen = pygame.display.set_mode((800, 450), 0, 0, 0)
-
-    # paste a picture on backgroud
-    backgroud = pygame.image.load("./image/backgroud.jpg").convert()
-
-    # paste a pic on my airplane
-    Hero = HeroPlane(screen)
-    clock = pygame.time.Clock()
-
-    # paste a cloud in air
-    cloud = pygame.image.load('./image/cloud.png').convert_alpha()
-
-    cloud_x = 800
-    cloud_y = random.randint(45, 300)
-    random_size = random.uniform(0.3,1.0)
-    cloud_speed = int(10*random_size)-4
-
+    screen = pygame.display.set_mode((800, 555), 0, 0, 0)
+    backgroud = Backgroud(screen)
+    hero = HeroPlane(screen)
+    i = 0
     while True:
-        keyControl(Hero)
-        screen.blit(backgroud, (0, 0))
-        tempNum=random_size
-        cloud = pygame.transform.smoothscale(cloud,(int(562*tempNum),int(432*tempNum)))
-        screen.blit(cloud, (cloud_x, cloud_y))
-        Hero.dispaly()
-
-        if cloud_speed>0:
-            cloud_x -= cloud_speed
-        else:
-            cloud_x -=1
-
+        i += 1
+        keyControl(hero)
+        backgroud.display()
+        hero.dispaly()
         pygame.display.update()
         time.sleep(0.01)
+
 
 if __name__ == "__main__":
     main()
