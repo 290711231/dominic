@@ -157,9 +157,7 @@ def main():
     screen = pygame.display.set_mode((800, 450), 0, 0, 0)
     backgroud = Backgroud(screen)
     hero = HeroPlane(screen)
-    i = 0
     while True:
-        i+=1
         keyControl(hero)
         backgroud.display()
         hero.dispaly()

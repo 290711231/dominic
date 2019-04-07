@@ -1,33 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/mei_hua_64yao/my_demo/Yuanbao_AirPlane.py" line="25" mnemonic="3" />
+    <bookmark url="file://$PROJECT_DIR$/mei_hua_64yao/my_demo/Yuanbao_AirPlane.py" line="27" mnemonic="3" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="52d82ddc-baaa-4c4e-a0df-6a94c7e07577" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/Yuanbao_AirPlane.py" beforeDir="false" afterPath="$PROJECT_DIR$/mei_hua_64yao/my_demo/Yuanbao_AirPlane.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-01.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-02.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-03.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-04.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-05.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-06.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-07.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-08.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-09.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-10.png" beforeDir="false" afterPath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-10.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-11.png" beforeDir="false" afterPath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-11.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-12.png" beforeDir="false" afterPath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-12.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-13.png" beforeDir="false" afterPath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-13.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-14.png" beforeDir="false" afterPath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-14.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-15.png" beforeDir="false" afterPath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-15.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-16.png" beforeDir="false" afterPath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-16.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-17.png" beforeDir="false" afterPath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-17.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-18.png" beforeDir="false" afterPath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-18.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-19.png" beforeDir="false" afterPath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-19.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-20.png" beforeDir="false" afterPath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-20.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-21.png" beforeDir="false" afterPath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-21.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-22.png" beforeDir="false" afterPath="$PROJECT_DIR$/mei_hua_64yao/my_demo/image/myplane-22.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mei_hua_64yao/my_demo/text.py" beforeDir="false" afterPath="$PROJECT_DIR$/mei_hua_64yao/my_demo/text.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,8 +16,8 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/dominic$text.coverage" NAME="text Coverage Results" MODIFIED="1554356814838" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mei_hua_64yao/my_demo" />
-    <SUITE FILE_PATH="coverage/dominic$Yuanbao_AirPlane.coverage" NAME="Yuanbao_AirPlane Coverage Results" MODIFIED="1554559691453" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mei_hua_64yao/my_demo" />
+    <SUITE FILE_PATH="coverage/dominic$text.coverage" NAME="text Coverage Results" MODIFIED="1554599326878" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mei_hua_64yao/my_demo" />
+    <SUITE FILE_PATH="coverage/dominic$Yuanbao_AirPlane.coverage" NAME="Yuanbao_AirPlane Coverage Results" MODIFIED="1554646547279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mei_hua_64yao/my_demo" />
     <SUITE FILE_PATH="coverage/dominic$text2.coverage" NAME="text2 Coverage Results" MODIFIED="1554357227605" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mei_hua_64yao/my_demo" />
   </component>
   <component name="FUSProjectUsageTrigger">
@@ -59,21 +38,21 @@
     <session id="-716810008">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.1" value="1" />
-          <entry key="project.open.time.5" value="2" />
+          <entry key="project.open.time.5" value="3" />
           <entry key="project.open.time.6" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="10" />
+          <entry key="Python" value="14" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="3056" />
+          <entry key="Python" value="5494" />
         </counts>
       </usages-collector>
     </session>
@@ -82,40 +61,20 @@
     <favorites_list name="dominic" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/mei_hua_64yao/my_demo/Yuanbao_AirPlane.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="422">
-                  <caret line="47" column="20" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
-                  <folding>
-                    <element signature="e#0#13#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/mei_hua_64yao/my_demo/text.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="3332">
-                  <caret line="171" selection-start-line="171" selection-end-line="171" />
-                  <folding>
-                    <element signature="e#0#13#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/mei_hua_64yao/my_demo/Yuanbao_AirPlane.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="660">
+              <caret line="264" column="22" selection-start-line="264" selection-start-column="22" selection-end-line="264" selection-end-column="22" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -123,6 +82,12 @@
       <find>blit</find>
       <find>addcloud</find>
       <find>cloudmove</find>
+      <find>Cloud</find>
+      <find>cloud x=</find>
+      <find>backgroud_2</find>
+      <find>keyControl</find>
+      <find>rangenum</find>
+      <find>animate</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -143,11 +108,10 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-8" />
-    <option name="y" value="1" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="1273" />
     <option name="width" value="1294" />
-    <option name="height" value="707" />
+    <option name="height" value="1407" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -279,12 +243,12 @@
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12957075" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13155803" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49960256" visible="true" weight="0.32786885" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49960256" weight="0.28727555" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -332,18 +296,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mei_hua_64yao/my_demo/text.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3332">
-          <caret line="171" selection-start-line="171" selection-end-line="171" />
+        <state relative-caret-position="4374">
+          <caret line="168" column="10" selection-start-line="168" selection-start-column="10" selection-end-line="168" selection-end-column="10" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37/Lib/random.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1406">
+          <caret line="185" column="28" selection-start-line="185" selection-start-column="18" selection-end-line="185" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mei_hua_64yao/my_demo/Yuanbao_AirPlane.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="47" column="20" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
+        <state relative-caret-position="660">
+          <caret line="264" column="22" selection-start-line="264" selection-start-column="22" selection-end-line="264" selection-end-column="22" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
