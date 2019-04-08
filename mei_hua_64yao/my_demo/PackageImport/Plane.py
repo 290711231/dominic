@@ -2,15 +2,19 @@
 # -*- coding:utf-8 -*-
 
 from Bullet import *
+import pygame
 
+class Plane(object):
+    def __init__(self,screen_temp,x_temp,image_temp):
+        self.screen =screen_temp
+        self.x =x_temp
+        self.image =pygame.image.load('./image/%s.png'%image_temp)
 
-
-class HeroPlane(object):
+class HeroPlane(Plane):
     def __init__(self, screen_temp):
-        self.screen = screen_temp
-        self.x = 0
+        Plane.__init__(self,screen_temp,0,'myplane-1')
+        self.speed = 5
         self.y = 200
-        self.image = pygame.image.load('./image/myplane-1.png')
         self.Herobullet = Bullet(screen_temp, self.x, self.y)
         self.bullet_list = [Bullet(self.screen, self.x, self.y)] * 10
 
@@ -20,19 +24,19 @@ class HeroPlane(object):
 
     def moveleft(self):
         print('left     %d' % self.x)
-        self.x -= 5
+        self.x -= self.speed
 
     def moveright(self):
         #print('right    %d' % self.x)
-        self.x += 5
+        self.x += self.speed
 
     def moveup(self):
         #print('up   %d' % self.y)
-        self.y -= 5
+        self.y -= self.speed
 
     def movedown(self):
         #print('down     %d' % self.y)
-        self.y += 5
+        self.y += self.speed
 
     def fire(self):
         #开火
@@ -48,15 +52,14 @@ class HeroPlane(object):
             if bullettemp.judge():
                 self.bullet_list.remove(bullettemp)
 
-class EnemyPlane(object):
+class EnemyPlane(Plane):
+
     def __init__(self, screen_temp):
-        self.screen = screen_temp
-        self.x = 800
+        Plane.__init__(self,screen_temp,800,'enemy_1_1')
         self.y = random.randrange(50,450)
-        self.image = pygame.image.load('./image/enemy_1_1.png')
+        self.speed = random.uniform(1.5, 2.2)
         self.enemybullet = Bullet(screen_temp, self.x, self.y)
         self.enemybullet_list = [Bullet(self.screen, self.x, self.y)] * 10
-        self.speed = random.uniform(0.8,1.2)
 
     def move(self):
         self.x -= self.speed

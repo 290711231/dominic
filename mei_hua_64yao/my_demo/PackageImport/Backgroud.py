@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
+
 from Cloud import *
 import pygame
 import random
@@ -10,8 +11,8 @@ class Backgroud(object):
         self.cloud_y = random.randrange(80,160)
         self.screen = screen_temp
         self.image = pygame.image.load("./image/backgroud.jpg").convert()
-        self.bgimage_1 = BackgroudImage(self.screen,'backgroud_1',0,238,1)
-        self.bgimage_2 = BackgroudImage(self.screen,'backgroud_2',0,0,0.3)
+        self.bgimage_1 = BackgroudImage(self.screen,'backgroud_1',0,238,0.3)
+        self.bgimage_2 = BackgroudImage(self.screen,'backgroud_2',0,0,0.1)
         self.cloud = Cloud(screen_temp, self.cloud_x, self.cloud_y)
         self.cloud_list = []
         self.backgroudlist_1 = []
