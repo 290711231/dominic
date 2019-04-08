@@ -1,3 +1,4 @@
+import sys
 from Plane import *
 from Backgroud import *
 from KeyInput import *
@@ -8,10 +9,8 @@ def main():
     enemy = EnemyPlane(screen)
     hero = HeroPlane(screen)
     clock = pygame.time.Clock()
-    i = 0
     while True:
         clock.tick(100)
-        i += 1
         keyControl(hero)
         backgroud.display()
         hero.dispaly()
