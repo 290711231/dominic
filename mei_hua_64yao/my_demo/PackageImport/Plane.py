@@ -3,16 +3,18 @@
 
 from Bullet import *
 import pygame
+from Curve import enemycurve
+import numpy as np
 
 class Plane(object):
-    def __init__(self,screen_temp,x_temp,image_temp):
+    def __init__(self,screen_temp,image_temp):
         self.screen =screen_temp
-        self.x =x_temp
         self.image =pygame.image.load('./image/%s.png'%image_temp)
 
 class HeroPlane(Plane):
     def __init__(self, screen_temp):
-        Plane.__init__(self,screen_temp,0,'myplane-1')
+        Plane.__init__(self,screen_temp,'myplane-1')
+        self.x = 0
         self.speed = 5
         self.y = 200
         self.Herobullet = Bullet(screen_temp, self.x, self.y)
@@ -55,14 +57,18 @@ class HeroPlane(Plane):
 class EnemyPlane(Plane):
 
     def __init__(self, screen_temp):
-        Plane.__init__(self,screen_temp,800,'enemy_1_1')
-        self.y = random.randrange(50,450)
+        Plane.__init__(self,screen_temp,'enemy_1_1')
+        self.x = np.arange(0, 20 * np.pi / 10, 0.1) * 60
+        self.y = np.sin(self.x) * 40
+        self.enemycoordinate = enemycurve()
         self.speed = random.uniform(1.5, 2.2)
-        self.enemybullet = Bullet(screen_temp, self.x, self.y)
+        #self.enemybullet = Bullet(screen_temp, self.x, self.y)
         self.enemybullet_list = [Bullet(self.screen, self.x, self.y)] * 10
+        self.xlist = []
+        self.ylist = []
 
-    def move(self):
-        self.x -= self.speed
+    #def move(self):
+    #    self.x -= self.speed
 
     def fire(self):
         for enemybulletnum in random.randrange(1,200):
@@ -70,9 +76,20 @@ class EnemyPlane(Plane):
                 #print('enemy fire  x=%d   y=%d' % (self.x-66, self.y+44))
                 #print(self.enemybullet_list)
                 self.enemybullet_list.append(Bullet(self.screen, self.x, self.y))
+    def num(self):
+
+
+        while self.x == -100:
+            self.xlist.append(self.x)
+            self.ylist.append(self.y)
 
     def dispaly(self):
-        self.screen.blit(self.image, (self.x, self.y))
+        #enemycurve.num(self)
+        self.num()
+        for x in self.xlist:
+            for y in self.ylist:
+
+                self.screen.blit(self.image, (x,y))
         for add_enemybulletnum in range(1,501):
             if add_enemybulletnum%50 == 0:
                 for bullettemp in self.enemybullet_list:
