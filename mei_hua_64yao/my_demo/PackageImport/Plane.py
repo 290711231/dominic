@@ -5,6 +5,7 @@ from Bullet import *
 import pygame
 from Curve import enemycurve
 import numpy as np
+import time
 
 class Plane(object):
     def __init__(self,screen_temp,image_temp):
@@ -58,43 +59,40 @@ class EnemyPlane(Plane):
 
     def __init__(self, screen_temp):
         Plane.__init__(self,screen_temp,'enemy_1_1')
-        self.x = np.arange(0, 20 * np.pi / 10, 0.1) * 60
-        self.y = np.sin(self.x) * 40
+        self.x = 800
+        self.y = random.randint(40,240)
+        self.xlist = np.arange(789,800,0.1)
+        self.ylist = np.sin(self.xlist) * 40
         self.enemycoordinate = enemycurve()
         self.speed = random.uniform(1.5, 2.2)
         #self.enemybullet = Bullet(screen_temp, self.x, self.y)
-        self.enemybullet_list = [Bullet(self.screen, self.x, self.y)] * 10
-        self.xlist = []
-        self.ylist = []
-
-    #def move(self):
-    #    self.x -= self.speed
-
-    def fire(self):
-        for enemybulletnum in random.randrange(1,200):
-            if enemybulletnum == 40 or enemybulletnum == 50:
-                #print('enemy fire  x=%d   y=%d' % (self.x-66, self.y+44))
-                #print(self.enemybullet_list)
-                self.enemybullet_list.append(Bullet(self.screen, self.x, self.y))
-    def num(self):
+        #self.enemybullet_list = [Bullet(self.screen, self.x, self.y)] * 10
 
 
-        while self.x == -100:
-            self.xlist.append(self.x)
-            self.ylist.append(self.y)
-
-    def dispaly(self):
-        #enemycurve.num(self)
-        self.num()
+    def move(self):
         for x in self.xlist:
             for y in self.ylist:
+                self.x -= x
+                self.y += y
+                self.screen.blit(self.image, (self.x, self.y))
 
-                self.screen.blit(self.image, (x,y))
-        for add_enemybulletnum in range(1,501):
-            if add_enemybulletnum%50 == 0:
-                for bullettemp in self.enemybullet_list:
-                    bullettemp.dispaly()
-                    bullettemp.enemymove()
-                    if bullettemp.enemyjudge():
-                        self.enemybullet_list.remove(bullettemp)
+
+
+    #def fire(self):
+    #    for enemybulletnum in random.randrange(1,200):
+    #        if enemybulletnum == 40 or enemybulletnum == 50:
+    #            #print('enemy fire  x=%d   y=%d' % (self.x-66, self.y+44))
+    #            #print(self.enemybullet_list)
+    #            self.enemybullet_list.append(Bullet(self.screen, self.x, self.y))
+
+    #def dispaly(self):
+    #    #enemycurve.num(self)
+    #    self.screen.blit(self.image, (self.x,self.y))
+    #    #for add_enemybulletnum in range(1,501):
+    #    #    if add_enemybulletnum%50 == 0:
+    #    #        for bullettemp in self.enemybullet_list:
+    #    #            bullettemp.dispaly()
+    #    #            bullettemp.enemymove()
+    #    #            if bullettemp.enemyjudge():
+    #    #                self.enemybullet_list.remove(bullettemp)
 

@@ -15,8 +15,8 @@ def main():
         backgroud.display()
         hero.dispaly()
         #hero.animate()
-        enemy.dispaly()
         enemy.move()
+        # enemy.dispaly()
         pygame.display.update()
         #time.sleep(0.01)
 
