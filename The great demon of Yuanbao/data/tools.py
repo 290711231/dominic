@@ -1,4 +1,4 @@
-__author__ = 'justinarmstrong'
+__author__ = 'dominic'
 
 import os
 import pygame as pg
@@ -12,26 +12,29 @@ keybinding = {
 }
 
 class Control(object):
-    """Control class for entire project. Contains the game loop, and contains
+    """整个项目的控制类。
+    包含游戏循环，并包含事件循环，根据需要将事件传递到状态。
+    翻转状态的逻辑在这里也能找到。
+    Control class for entire project. Contains the game loop, and contains
     the event_loop which passes events to States as needed. Logic for flipping
     states is also found here."""
     def __init__(self, caption):
-        self.screen = pg.display.get_surface()
+        self.screen = pg.display.get_surface()#获取对当前设置的显示表面的引用
         self.done = False
-        self.clock = pg.time.Clock()
+        self.clock = pg.time.Clock()#刷新率
         self.caption = caption
         self.fps = 60
         self.show_fps = False
         self.current_time = 0.0
-        self.keys = pg.key.get_pressed()
+        self.keys = pg.key.get_pressed()#获取所有键盘的状态
         self.state_dict = {}
         self.state_name = None
         self.state = None
 
-    def setup_states(self, state_dict, start_state):
-        self.state_dict = state_dict
+    def setup_states(self, state_dict, start_state): #定义setup states方法
+        self.state_dict = state_dict #用参数给dict赋值
         self.state_name = start_state
-        self.state = self.state_dict[self.state_name]
+        self.state = self.state_dict[self.state_name] #self.state = 字典state_dict中state_name中的值
 
     def update(self):
         self.current_time = pg.time.get_ticks()
@@ -69,8 +72,10 @@ class Control(object):
 
 
     def main(self):
-        """Main loop for entire program"""
-        while not self.done:
+        """Main loop for entire program
+        他是整个主程序循环使用
+        """
+        while not self.done: #是否done为空
             self.event_loop()
             self.update()
             pg.display.update()
@@ -108,40 +113,74 @@ class _State(object):
 
 
 def load_all_gfx(directory, colorkey=(255,0,255), accept=('.png', 'jpg', 'bmp')):
-    graphics = {}
+    '''
+
+    :param 文件夹名:
+    :param 色值rgb:
+    :param 文件类型:
+    :return:
+    '''
+    graphics = {}#声明图集字典
     for pic in os.listdir(directory):
-        name, ext = os.path.splitext(pic)
-        if ext.lower() in accept:
+        #遍历文件名下的所有文件
+        name, ext = os.path.splitext(pic)#拆分成文件名和扩展名
+        if ext.lower() in accept:#判断扩展名（小写）是否在文件类型中
             img = pg.image.load(os.path.join(directory, pic))
-            if img.get_alpha():
+            #变量img = 载入图片函数（连接目录名和遍历到的图片文件名）
+            if img.get_alpha():#判断图片的是否有alpha通道
                 img = img.convert_alpha()
+                #img = 保留alpha通道的图
             else:
-                img = img.convert()
+                img = img.convert()#img = 不保留alpaa通道的图
                 img.set_colorkey(colorkey)
+                #将与colorkey（255,0,255）相同的颜色变成alpha
             graphics[name]=img
-    return graphics
+            #添加字典元素[name名称：遍历到的图片img]
+    return graphics #返回遍历得到的图片合集
 
 
 def load_all_music(directory, accept=('.wav', '.mp3', '.ogg', '.mdi')):
-    songs = {}
-    for song in os.listdir(directory):
-        name,ext = os.path.splitext(song)
-        if ext.lower() in accept:
+    '''
+    :param 文件夹名:
+    :param 文件类型:
+    :return: 返回遍历到的歌名
+
+    '''
+    songs = {}#建立歌名字典
+    for song in os.listdir(directory):#遍历参数文件夹中的文件
+        name,ext = os.path.splitext(song)#将遍历来的文件名和扩展名分离
+        if ext.lower() in accept:#判断扩展名（小写）在不在accept里
             songs[name] = os.path.join(directory, song)
-    return songs
+            #添加字典元素[name名称：将参数文件夹名和遍历到的文件名合并后的名字]
+    return songs#返回遍历到的歌名字典
 
 
 def load_all_fonts(directory, accept=('.ttf')):
+    '''
+
+    :param 文件夹名:
+    :param 文件类型:
+    :return:返回字体名
+
+    '''
     return load_all_music(directory, accept)
+    #继承返回遍历歌名的操作，来建立字体字典
 
 
 def load_all_sfx(directory, accept=('.wav','.mpe','.ogg','.mdi')):
-    effects = {}
-    for fx in os.listdir(directory):
-        name, ext = os.path.splitext(fx)
-        if ext.lower() in accept:
+    '''
+
+    :param 文件夹名:
+    :param 文件类型:
+    :return:返回音效集合
+    '''
+    effects = {}#建立音效字典
+    for fx in os.listdir(directory):#遍历参数文件夹中的文件
+        name, ext = os.path.splitext(fx)#分离文件名和扩展名
+        if ext.lower() in accept:#检测扩展名是否在文件类型里
             effects[name] = pg.mixer.Sound(os.path.join(directory, fx))
-    return effects
+            #建立effects字典[name名称：遍历到的文件的音效对象]
+    return effects #返回音效字典
 
 
 

@@ -1,4 +1,4 @@
-__author__ = 'justinarmstrong'
+__author__ = 'dominic'
 
 from .. import setup, tools
 from .. import constants as c

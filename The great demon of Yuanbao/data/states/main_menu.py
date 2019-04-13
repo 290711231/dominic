@@ -1,4 +1,4 @@
-__author__ = 'justinarmstrong'
+__author__ = 'dominic'
 
 import pygame as pg
 from .. import setup, tools
@@ -6,18 +6,20 @@ from .. import constants as c
 from .. components import info, mario
 
 
-class Menu(tools._State):
+class Menu(tools._State): #继承自tool._State类
     def __init__(self):
-        """Initializes the state"""
+        """Initializes the state
+        初始化属性"""
         tools._State.__init__(self)
-        persist = {c.COIN_TOTAL: 0,
-                   c.SCORE: 0,
-                   c.LIVES: 3,
-                   c.TOP_SCORE: 0,
-                   c.CURRENT_TIME: 0.0,
-                   c.LEVEL_STATE: None,
-                   c.CAMERA_START_X: 0,
-                   c.MARIO_DEAD: False}
+        persist = {c.COIN_TOTAL: 0, #金币数量 : 0
+                   c.SCORE: 0, #分数 : 0
+                   c.LIVES: 3, #声明 : 3
+                   c.TOP_SCORE: 0, #最高分 : 0
+                   c.CURRENT_TIME: 0.0, #当前时间 : 0.0
+                   c.LEVEL_STATE: None, #等级属性:None
+                   c.CAMERA_START_X: 0, #摄像机的x:0
+                   c.MARIO_DEAD: False} #MARIO_DEAD :False
+
         self.startup(0.0, persist)
 
     def startup(self, current_time, persist):

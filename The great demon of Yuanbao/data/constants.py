@@ -1,4 +1,4 @@
-__author__ = 'justinarmstrong'
+__author__ = 'dominic'
 
 SCREEN_HEIGHT = 600
 SCREEN_WIDTH = 800

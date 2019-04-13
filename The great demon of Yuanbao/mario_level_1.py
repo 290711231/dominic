@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-__author__ = 'justinarmstrong'
+__author__ = 'dominic'
 
 """
 This is an attempt to recreate the first level of
@@ -13,6 +13,9 @@ import cProfile
 
 
 if __name__=='__main__':
+    #调用data下的main函数
     main()
+    #调用pygame下quit函数
     pg.quit()
+    #调用sys下的exit函数退出
     sys.exit()
