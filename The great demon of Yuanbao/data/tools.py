@@ -19,55 +19,84 @@ class Control(object):
     the event_loop which passes events to States as needed. Logic for flipping
     states is also found here."""
     def __init__(self, caption):
-        self.screen = pg.display.get_surface()#获取对当前设置的显示表面的引用
+        # 获取对当前设置的显示表面的引用
+        self.screen = pg.display.get_surface()
         self.done = False
-        self.clock = pg.time.Clock()#刷新率
+        # 创造游戏时钟
+        self.clock = pg.time.Clock()
+        # caption属性
         self.caption = caption
+        # fps属性，赋值60
         self.fps = 60
         self.show_fps = False
+        # 定义当前时间current_time属性为0.0
         self.current_time = 0.0
-        self.keys = pg.key.get_pressed()#获取所有键盘的状态
+        # key属性获取所有键盘的状态
+        self.keys = pg.key.get_pressed()
         self.state_dict = {}
+        # 定义state_name属性
         self.state_name = None
+        # 定义state属性
         self.state = None
 
     def setup_states(self, state_dict, start_state): #定义setup states方法
-        self.state_dict = state_dict #用参数给dict赋值
+        # 用参数给state_dict赋值
+        self.state_dict = state_dict
+        # 给state_name赋值
         self.state_name = start_state
-        self.state = self.state_dict[self.state_name] #self.state = 字典state_dict中state_name中的值
+        # self.state 指向 字典state_dict中state_name中的值
+        self.state = self.state_dict[self.state_name]
 
-    def update(self):
+    def update(self): #定义update方法
+        # 得到以毫秒为间隔的当前时间
         self.current_time = pg.time.get_ticks()
-        if self.state.quit:
+        if self.state.quit: #判断state.quit是否为True
             self.done = True
-        elif self.state.done:
+        elif self.state.done: #判断state.done是否为True
+            # 调用flip_state方法
             self.flip_state()
+        #为state添加三个元素（当前的显示屏幕，当前的键盘输入，当前的时间）
         self.state.update(self.screen, self.keys, self.current_time)
 
     def flip_state(self):
+        #previous = self.state_name,self.state_name = self.state.next
         previous, self.state_name = self.state_name, self.state.next
         persist = self.state.cleanup()
+        # self.state 指向 字典state_dict中state_name中的值
         self.state = self.state_dict[self.state_name]
+        #调用state.startup方法，传入当前时间和persist
         self.state.startup(self.current_time, persist)
+        #给state_previous 赋值为self.state_name
         self.state.previous = previous
 
 
-    def event_loop(self):
+    def event_loop(self):   #定义循环事件属性
+        #遍历待处理事件列表
         for event in pg.event.get():
+            #判断是否按下关闭
             if event.type == pg.QUIT:
                 self.done = True
+            #判断是否按下键盘
             elif event.type == pg.KEYDOWN:
+                #获取输入键盘
                 self.keys = pg.key.get_pressed()
+                #调用toggle_show_fps方法
                 self.toggle_show_fps(event.key)
+            #判断是否抬起键盘
             elif event.type == pg.KEYUP:
+                #获取输入键盘
                 self.keys = pg.key.get_pressed()
             self.state.get_event(event)
 
 
-    def toggle_show_fps(self, key):
+    def toggle_show_fps(self, key):#按下F5，在窗口标题显示帧率
+        #判断是否按下F5
         if key == pg.K_F5:
+            #self.show_fps为反
             self.show_fps = not self.show_fps
+            #如果为不是self.show_fps为Flase
             if not self.show_fps:
+                #设置当前窗体标题为self.caption
                 pg.display.set_caption(self.caption)
 
 
@@ -76,13 +105,21 @@ class Control(object):
         他是整个主程序循环使用
         """
         while not self.done: #是否done为空
+            #调用循环处理事件方法
             self.event_loop()
+            #调用update方法
             self.update()
+            #更新画面
             pg.display.update()
+            #每秒钟设置60次更新，即帧率为60
             self.clock.tick(self.fps)
+            #判断是否显示帧率
             if self.show_fps:
+                #获取当前帧率
                 fps = self.clock.get_fps()
+                #with_fps为窗体名称：caption - fps值
                 with_fps = "{} - {:.2f} FPS".format(self.caption, fps)
+                #把with_fps显示在窗体标题上
                 pg.display.set_caption(with_fps)
 
 
