@@ -44,7 +44,7 @@ class Control(object):
         self.state_dict = state_dict
         # 给state_name赋值
         self.state_name = start_state
-        # self.state 指向 字典state_dict中state_name中的值
+        # self.state 指向 字典state_dict中state_name
         self.state = self.state_dict[self.state_name]
 
     def update(self): #定义update方法
@@ -55,12 +55,13 @@ class Control(object):
         elif self.state.done: #判断state.done是否为True
             # 调用flip_state方法
             self.flip_state()
-        #为state添加三个元素（当前的显示屏幕，当前的键盘输入，当前的时间）
+        #调用state.update方法(即main_menu.Menu.update方法，并传入显示平面，按钮和当前时间参数)
         self.state.update(self.screen, self.keys, self.current_time)
 
     def flip_state(self):
         #previous = self.state_name,self.state_name = self.state.next
         previous, self.state_name = self.state_name, self.state.next
+        #调用state.cleanup方法（）
         persist = self.state.cleanup()
         # self.state 指向 字典state_dict中state_name中的值
         self.state = self.state_dict[self.state_name]
@@ -70,7 +71,7 @@ class Control(object):
         self.state.previous = previous
 
 
-    def event_loop(self):   #定义循环事件属性
+    def event_loop(self):   #循环事件，监测键盘状态
         #遍历待处理事件列表
         for event in pg.event.get():
             #判断是否按下关闭
@@ -105,7 +106,7 @@ class Control(object):
         他是整个主程序循环使用
         """
         while not self.done: #是否done为空
-            #调用循环处理事件方法
+            #调用循环处理方法，监测键盘状态
             self.event_loop()
             #调用update方法
             self.update()

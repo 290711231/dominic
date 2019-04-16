@@ -15,14 +15,18 @@ class Character(pg.sprite.Sprite):
 
 
 class OverheadInfo(object):
-    """Class for level information like score, coin total,
-        and time remaining"""
+    """Class for level information like score, coin total,and time remaining
+        类获取级别信息，如分数、硬币总数和剩余时间"""
     def __init__(self, game_info, state):
+        #self.sprite_sheet = setup.GFX动画字典图集中的text_images.png
         self.sprite_sheet = setup.GFX['text_images']
+        #self.coin_total = game_info字典中'coin total'的值
         self.coin_total = game_info[c.COIN_TOTAL]
         self.time = 401
         self.current_time = 0
+        # self.coin_total = game_info字典中'lives'的值
         self.total_lives = game_info[c.LIVES]
+        # self.coin_total = game_info字典中'top score'的值
         self.top_score = game_info[c.TOP_SCORE]
         self.state = state
         self.special_state = None
@@ -42,10 +46,12 @@ class OverheadInfo(object):
 
 
     def create_image_dict(self):
-        """Creates the initial images for the score"""
+        """Creates the initial images for the score
+        为分数创建初始图像"""
         self.image_dict = {}
+        #生成分数图集列表
         image_list = []
-
+        #调用get_image方法给image_list添加元素
         image_list.append(self.get_image(3, 230, 7, 7))
         image_list.append(self.get_image(12, 230, 7, 7))
         image_list.append(self.get_image(19, 230, 7, 7))
@@ -89,23 +95,31 @@ class OverheadInfo(object):
         image_list.append(self.get_image(75, 247, 6, 6))
 
 
-
+        #给字符串character_string赋值
         character_string = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ -*'
 
+        #character遍历character_string，image遍历image_list
         for character, image in zip(character_string, image_list):
+            #将遍历的结果组成新的键值对，并添加到image_dict列表中
             self.image_dict[character] = image
 
 
     def get_image(self, x, y, width, height):
-        """Extracts image from sprite sheet"""
+        """Extracts image from sprite sheet
+        从sprite sheet中提取图像元素"""
+        #image 根据宽高实例化一个surface对象
         image = pg.Surface([width, height])
+        #获取image的矩形区域
         rect = image.get_rect()
-
+        #把这个image中x，y坐标上裁切宽高为width，height的图片，并画在self.sprite_sheet舞台的0,0点上
         image.blit(self.sprite_sheet, (0, 0), (x, y, width, height))
+        #设置image的rgb的色值
         image.set_colorkey((92, 148, 252))
+        #对surfacer对象变形，宽高各放大2.9倍，并重新赋值给image对象
         image = pg.transform.scale(image,
                                    (int(rect.width*2.9),
                                     int(rect.height*2.9)))
+        #返回image对象
         return image
 
 

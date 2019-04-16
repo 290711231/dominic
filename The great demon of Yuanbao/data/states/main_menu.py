@@ -23,11 +23,15 @@ class Menu(tools._State): #继承自tool._State类
         self.startup(0.0, persist)
 
     def startup(self, current_time, persist):
-        """Called every time the game's state becomes this one.  Initializes
-        certain values"""
+        """Called every time the game's state becomes this one.  Initializes certain values.
+        游戏状态每次变成这个时调用，初始化一些值"""
+        #self.next = 'loading screen'
         self.next = c.LOAD_SCREEN
+        #self.presist = 传入的参数presist
         self.persist = persist
+        #self.game_info = 传入的参数presist
         self.game_info = persist
+        #self.overhead_info = info.OverheadInfo 并传入persist和'main menu'
         self.overhead_info = info.OverheadInfo(self.game_info, c.MAIN_MENU)
 
         self.sprite_sheet = setup.GFX['title_screen']
@@ -91,8 +95,11 @@ class Menu(tools._State): #继承自tool._State类
 
 
     def update(self, surface, keys, current_time):
-        """Updates the state every refresh"""
+        """Updates the state every refresh
+        每次刷新时更新状态"""
+        #接收当前时间
         self.current_time = current_time
+
         self.game_info[c.CURRENT_TIME] = self.current_time
         self.update_cursor(keys)
         self.overhead_info.update(self.game_info)
