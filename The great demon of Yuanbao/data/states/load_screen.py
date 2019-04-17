@@ -7,7 +7,9 @@ from ..components import info
 
 
 class LoadScreen(tools._State):
+    #创建LoadScreen类，继承自tool._State
     def __init__(self):
+        #继承tool._State全部__init__属性
         tools._State.__init__(self)
 
     def startup(self, current_time, persist):

@@ -156,7 +156,7 @@ def load_all_gfx(directory, colorkey=(255,0,255), accept=('.png', 'jpg', 'bmp'))
     :param 文件夹名:
     :param 色值rgb:
     :param 文件类型:
-    :return:
+    :return:set_colorkey
     '''
     graphics = {}#声明图集字典
     for pic in os.listdir(directory):
@@ -171,7 +171,7 @@ def load_all_gfx(directory, colorkey=(255,0,255), accept=('.png', 'jpg', 'bmp'))
             else:
                 img = img.convert()#img = 不保留alpaa通道的图
                 img.set_colorkey(colorkey)
-                #将与colorkey（255,0,255）相同的颜色变成alpha
+                #将与colorkey（255,0,255）相同的颜色变成透明
             graphics[name]=img
             #添加字典元素[name名称：遍历到的图片img]
     return graphics #返回遍历得到的图片合集
