@@ -130,18 +130,20 @@ class OverheadInfo(object):
 
 
     def create_info_labels(self):
-        """Creates the labels that describe each info"""
+        """Creates the labels that describe each info
+        创建描述每个信息的标签"""
+        #定义每个标签
         self.mario_label = []
         self.world_label = []
         self.time_label = []
         self.stage_label = []
 
-
+        #调用self.create_label方法，并传入值
         self.create_label(self.mario_label, 'MARIO', 75, 30)
         self.create_label(self.world_label, 'WORLD', 450, 30)
         self.create_label(self.time_label, 'TIME', 625, 30)
         self.create_label(self.stage_label, '1-1', 472, 55)
-
+        #创建标签列表
         self.label_list = [self.mario_label,
                            self.world_label,
                            self.time_label,
@@ -149,7 +151,8 @@ class OverheadInfo(object):
 
 
     def create_load_screen_labels(self):
-        """Creates labels for the center info of a load screen"""
+        """Creates labels for the center info of a load screen
+        为一个屏幕的中心信息创建标签"""
         world_label = []
         number_label = []
 
@@ -166,7 +169,8 @@ class OverheadInfo(object):
 
 
     def create_label(self, label_list, string, x, y):
-        """Creates a label (WORLD, TIME, MARIO)"""
+        """Creates a label (WORLD, TIME, MARIO)
+        创建一个标签（世界，时间，马里奥）"""
         for letter in string:
             label_list.append(Character(self.image_dict[letter]))
 

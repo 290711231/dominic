@@ -13,19 +13,25 @@ class LoadScreen(tools._State):
         tools._State.__init__(self)
 
     def startup(self, current_time, persist):
+        #self.start_time = 传入的参数current_time
         self.start_time = current_time
+        #self.persist = 传入的参数persist
         self.persist = persist
+        #将self.persist赋值给self.game_info
         self.game_info = self.persist
+        #self.next = 方法self.set_next_state的返回值（即： 'level1'）
         self.next = self.set_next_state()
-
+        #info_state = 方法self.set_overhead_info_state的返回值（即：'load screen'）
         info_state = self.set_overhead_info_state()
-
+        #传入参数（self.game_info,info_state）并用info.OverheadInfo实例化一个对象self.overhead_info
         self.overhead_info = info.OverheadInfo(self.game_info, info_state)
+        #传入参数（self.overhead_info）并用game_sound.Sound实例化一个对象self.sound_manager
         self.sound_manager = game_sound.Sound(self.overhead_info)
 
 
     def set_next_state(self):
-        """Sets the next state"""
+        """Sets the next state
+        设置下一个状态"""
         return c.LEVEL1
 
     def set_overhead_info_state(self):
