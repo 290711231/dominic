@@ -22,7 +22,8 @@ class Level1(tools._State):
         tools._State.__init__(self)
 
     def startup(self, current_time, persist):
-        """Called when the State object is created"""
+        """Called when the State object is created
+        创建状态对象时声明"""
         self.game_info = persist
         self.persist = self.game_info
         self.game_info[c.CURRENT_TIME] = current_time

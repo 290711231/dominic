@@ -12,8 +12,11 @@ class Coin(pg.sprite.Sprite):
         super(Coin, self).__init__()
         #用setup.GFX方法传入‘item_objects’来实例化图片item_objects.png
         self.sprite_sheet = setup.GFX['item_objects']
+        #用self.create_frames方法提取金币图像并添加到self.frames列表中
         self.create_frames()
+        #定义self.image为self.frames中的元素
         self.image = self.frames[0]
+        #获取self.image的信息（x,y,宽,高）并赋值给self.rect
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -30,9 +33,9 @@ class Coin(pg.sprite.Sprite):
         self.frame_index = 0
 
         # 给帧列表添加三个元素
-        self.frames.append(self.get_image(1, 160, 5, 8))
-        self.frames.append(self.get_image(9, 160, 5, 8))
-        self.frames.append(self.get_image(17, 160, 5, 8))
+        self.frames.append(self.get_image(1, 160, 5, 8))    #黄色金币
+        self.frames.append(self.get_image(9, 160, 5, 8))    #橙色金币
+        self.frames.append(self.get_image(17, 160, 5, 8))   #暗色金币
 
 
     def get_image(self, x, y, width, height):
@@ -69,17 +72,25 @@ class Coin(pg.sprite.Sprite):
                 if (current_time - self.timer) > 125:   #判断当前时间减去self.timer是否大于125
                     #帧索引 += 1
                     self.frame_index += 1
+                    #self.timer = 当前时间
                     self.timer = current_time
-            elif self.frame_index == 2:
-                if (current_time - self.timer) > 125:
+            elif self.frame_index == 2: #判断帧索引是否等于2
+                if (current_time - self.timer) > 125:   #判断当前时间减去self.timer是否大于125
+                    #帧索引 -= 1
                     self.frame_index -= 1
+                    #self.first_half = False
                     self.first_half = False
+                    #self.timer = 当前时间
                     self.timer = current_time
         else:
-            if self.frame_index == 1:
+            if self.frame_index == 1:   #判断帧索引是否为1
                 if (current_time - self.timer) > 125:
+                    #帧索引 -= 1
                     self.frame_index -= 1
+                    #self.first_half = True
                     self.first_half = True
+                    #self.timer = 当前时间
                     self.timer = current_time
 
+        #self.image = 根据帧索引获取的图片列表中的元素
         self.image = self.frames[self.frame_index]

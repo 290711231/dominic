@@ -37,16 +37,27 @@ class OverheadInfo(object):
         self.special_state = None
         self.game_info = game_info
 
+        # 调用self.create_image_dict()方法创建数字和文字的图集字典
         self.create_image_dict()
+        # 调用self.create_score_group()方法创建初始化分数
         self.create_score_group()
+        # 调用self.create_info_labels()方法创建屏幕上方的文字信息
         self.create_info_labels()
+        # 调用self.create_load_screen_labels()方法创建关卡开始时屏幕中心的关卡信息
         self.create_load_screen_labels()
+        # 调用self.create_countdown_clock()方法创建一个倒计时时钟
         self.create_countdown_clock()
+        # 调用self.create_coin_counter()方法创建屏幕上方收集金币的信息（*00）
         self.create_coin_counter()
+        # 调用self.create_flashing_coin()方法创建屏幕上方金币闪烁的动画
         self.create_flashing_coin()
+        # 调用self.create_mario_image()方法来创建屏幕上方的马里奥
         self.create_mario_image()
+        # 调用self.create_game_over_label()方法来创建游戏结束标签
         self.create_game_over_label()
+        # 调用self.create_time_out_label()方法来创建游戏超时标签
         self.create_time_out_label()
+        # 调用self.create_main_menu_labels()方法来创建主菜单标签
         self.create_main_menu_labels()
 
     def create_image_dict(self):
@@ -205,7 +216,7 @@ class OverheadInfo(object):
     def create_coin_counter(self):
         """Creates the info that tracks the number of coins Mario collects
         创建一个追踪马里奥收集金币数量的信息"""
-        #定义金币收集数量的图片列表
+        # 定义金币收集数量的图片列表
         self.coin_count_images = []
         # 调用self.create_label方法获取金币数的美术字图集
         self.create_label(self.coin_count_images, '*00', 300, 55)
@@ -213,50 +224,73 @@ class OverheadInfo(object):
     def create_flashing_coin(self):
         """Creates the flashing coin next to the coin total
         在硬币总数旁边创建闪烁的硬币"""
-        #调用flashing_coin.Coin方法来实例化一个self.flashing_coin
+        # 调用flashing_coin.Coin方法来实例化一个self.flashing_coin
         self.flashing_coin = flashing_coin.Coin(280, 53)
 
     def create_mario_image(self):
-        """Get the mario image"""
+        """Get the mario image
+        获取马里奥的图片"""
+        # 传参数给self.get_image方法来实例化一个声明次数的图片
         self.life_times_image = self.get_image(75, 247, 6, 6)
+        # 获取life_times_image的矩形绘制范围，且中心坐标为（378,295）
         self.life_times_rect = self.life_times_image.get_rect(center=(378, 295))
+        # 创建屏幕上方的生命值标签列表
         self.life_total_label = []
+        # 遍历self.total_lives（即：字典geme_info中‘LIVE’键对应的值）中的字符，并赋予坐标（450,285）
         self.create_label(self.life_total_label, str(self.total_lives),
                           450, 285)
 
+        # self.sprite_sheet = 图片集字典中的‘mario_bros’键对应的值（即：mario_bros.png）
         self.sprite_sheet = setup.GFX['mario_bros']
+        # self.mario_image = 裁取mario_bros.png中坐标为（178,32）宽高为（12,16）的部分（即：站立的马里奥）
         self.mario_image = self.get_image(178, 32, 12, 16)
+        # 获取self.mario_image的矩形绘制范围，且中心坐标为（320,290）
         self.mario_rect = self.mario_image.get_rect(center=(320, 290))
 
     def create_game_over_label(self):
-        """Create the label for the GAME OVER screen"""
+        """Create the label for the GAME OVER screen
+        为 GAME OVER 在屏幕上创建标签"""
+        # 定义 geme 和over 的列表
         game_label = []
         over_label = []
 
+        # 遍历 GAME 和 OVER 的字符，添加到列表中，并分别赋予坐标（280,300）和（400,300）
         self.create_label(game_label, 'GAME', 280, 300)
         self.create_label(over_label, 'OVER', 400, 300)
 
+        # 用 game 和 over 的列表创建一个列表self.game_over_label
         self.game_over_label = [game_label, over_label]
 
     def create_time_out_label(self):
-        """Create the label for the time out screen"""
+        """Create the label for the time out screen
+        为游戏超时创建一个列表"""
+        # 定义time_out_label列表
         time_out_label = []
 
+        # 遍历‘TIME OUT’中的字符，添加到time_out_label列表中，并赋予坐标（290,310）
         self.create_label(time_out_label, 'TIME OUT', 290, 310)
+        # 用列表time_out_label创建一个新列表self.time_out_label
         self.time_out_label = [time_out_label]
 
     def create_main_menu_labels(self):
-        """Create labels for the MAIN MENU screen"""
+        """Create labels for the MAIN MENU screen
+        为主菜单创建标签"""
+        # 定义主菜单需要的列表
         player_one_game = []
         player_two_game = []
         top = []
         top_score = []
 
+        # 遍历‘1 PLAYER GAME’中的字符，添加到player_one_game列表中，并赋予坐标（272,360）
         self.create_label(player_one_game, '1 PLAYER GAME', 272, 360)
+        # 遍历‘2 PLAYER GAME’中的字符，添加到player_two_game列表中，并赋予坐标（272,405）
         self.create_label(player_two_game, '2 PLAYER GAME', 272, 405)
+        # 遍历‘TOP - ’中的字符，添加到top列表中，并赋予坐标（290,465）
         self.create_label(top, 'TOP - ', 290, 465)
+        # 遍历‘000000’中的字符，添加到top_score列表中，并赋予坐标（400,465）
         self.create_label(top_score, '000000', 400, 465)
 
+        #用player_one_game,player_two_geme,top和top_score创建一个新的列表self.main_menu_labels
         self.main_menu_labels = [player_one_game, player_two_game,
                                  top, top_score]
 
