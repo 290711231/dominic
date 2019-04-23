@@ -1,4 +1,4 @@
-__author__ = 'justinarmstrong'
+__author__ = 'dominic'
 
 import pygame as pg
 from .. import setup
@@ -8,7 +8,7 @@ from . import flashing_coin
 
 class Character(pg.sprite.Sprite):
     """Parent class for all characters used for the overhead level info
-    所有用于顶部等级信息的字符的父类"""
+    所有用于开销等级信息的字符的父类"""
 
     def __init__(self, image):
         super(Character, self).__init__()
@@ -290,36 +290,54 @@ class OverheadInfo(object):
         # 遍历‘000000’中的字符，添加到top_score列表中，并赋予坐标（400,465）
         self.create_label(top_score, '000000', 400, 465)
 
-        #用player_one_game,player_two_geme,top和top_score创建一个新的列表self.main_menu_labels
+        # 用player_one_game,player_two_geme,top和top_score创建一个新的列表self.main_menu_labels
         self.main_menu_labels = [player_one_game, player_two_game,
                                  top, top_score]
 
     def update(self, level_info, mario=None):
-        """Updates all overhead info"""
+        """Updates all overhead info
+        更新全部系统开销信息？"""
         self.mario = mario
+        # 调用self.handle_level_state方法
         self.handle_level_state(level_info)
 
     def handle_level_state(self, level_info):
-        """Updates info based on what state the game is in"""
-        if self.state == c.MAIN_MENU:
+        """Updates info based on what state the game is in
+        根据游戏的状况更新信息"""
+        if self.state == c.MAIN_MENU:  # 判断self.state是否为'main menu'
+            # self.score = 等级信息字典level_info中的'score'键指向的值
             self.score = level_info[c.SCORE]
+            # 调用self.update_score_images方法来更新self.score的分数信息
             self.update_score_images(self.score_images, self.score)
+            # 调用self.update_score_images方法来更新self.main_menu_labels列表中下标为3的信息（即：top_score）
             self.update_score_images(self.main_menu_labels[3], self.top_score)
+            # 调用self.update_coin_total方法更新金币数 并 相应的调整标签
             self.update_coin_total(level_info)
+            # 传入level_info字典中'current time'键指向的值，调用self.flashing_coin.update方法
+            # 创造闪烁的金币的动画
             self.flashing_coin.update(level_info[c.CURRENT_TIME])
 
-        elif self.state == c.LOAD_SCREEN:
+        elif self.state == c.LOAD_SCREEN:  # 判断self.state是否为'load screen'
+            # 将level_info字典中 'score'键指向的值赋值给self.score
             self.score = level_info[c.SCORE]
+            # 调用self.update_score_images方法来更新分数的图片信息
             self.update_score_images(self.score_images, self.score)
+            # 调用self.update_coin_total方法更新金币数 并 相应的调整标签
             self.update_coin_total(level_info)
 
-        elif self.state == c.LEVEL:
+        elif self.state == c.LEVEL: # 判断self.state是否为'level'
+            # 将level_info字典中 'score'键指向的值赋值给self.score
             self.score = level_info[c.SCORE]
+            # 调用self.update_score_images方法来更新分数的图片信息
             self.update_score_images(self.score_images, self.score)
+            # 判断level_info字典中 'level state'键指向的值是否不是'frozen'
+            # 并且self.mario.state 不是 'walking to castle'
+            #并且and self.mario.state 不是 'end of level fall'
             if level_info[c.LEVEL_STATE] != c.FROZEN \
                     and self.mario.state != c.WALKING_TO_CASTLE \
                     and self.mario.state != c.END_OF_LEVEL_FALL \
                     and not self.mario.dead:
+                #
                 self.update_count_down_clock(level_info)
             self.update_coin_total(level_info)
             self.flashing_coin.update(level_info[c.CURRENT_TIME])
@@ -348,13 +366,18 @@ class OverheadInfo(object):
             self.flashing_coin.update(level_info[c.CURRENT_TIME])
 
     def update_score_images(self, images, score):
-        """Updates what numbers are to be blitted for the score"""
+        """Updates what numbers are to be blitted for the score
+        更新那些将要为分数传递的数字"""
         index = len(images) - 1
-
+        # 将分数转换成字符串，并倒序排列，在遍历以下
         for digit in reversed(str(score)):
+            # 获取images图集中最后一个元素的信息
             rect = images[index].rect
+            # 给Character传入参数self，image_dict字典中'digit'键所指向的值，来实例化对象images[index]
             images[index] = Character(self.image_dict[digit])
+            # 将rect重新赋值给images[index]
             images[index].rect = rect
+            # index递减
             index -= 1
 
     def update_count_down_clock(self, level_info):
@@ -376,22 +399,32 @@ class OverheadInfo(object):
             self.set_label_rects(self.count_down_images, 645, 55)
 
     def update_coin_total(self, level_info):
-        """Updates the coin total and adjusts label accordingly"""
+        """Updates the coin total and adjusts label accordingly
+        更新金币数 并 相应的调整标签"""
+        # 把level_info字典中'coin total'键对应的值赋给self.coin_total
         self.coin_total = level_info[c.COIN_TOTAL]
 
+        # 将金币数转换成字符串，并赋给变量coin_string
         coin_string = str(self.coin_total)
-        if len(coin_string) < 2:
+
+        if len(coin_string) < 2:  # 判断金币数的字符串是否小于2
+            # 金币数前加字符串'*0'再重新赋值给coin_string
             coin_string = '*0' + coin_string
-        elif len(coin_string) > 2:
+        elif len(coin_string) > 2:  # 判断金币数的字符串是够大于2
+            # 金币数等于字符串'*00'
             coin_string = '*00'
         else:
+            # 金币数前加字符串'*'再重新赋值给coin_string
             coin_string = '*' + coin_string
 
+        # 获取coin_count_images[0]位置信息的 x轴 和 y轴
         x = self.coin_count_images[0].rect.x
         y = self.coin_count_images[0].rect.y
 
+        # 将self.coin_count_images清空
         self.coin_count_images = []
 
+        # 调用self.create_label方法将金币数指向的图片信息添加到self.coin_count_images字典中
         self.create_label(self.coin_count_images, coin_string, x, y)
 
     def draw(self, surface):
