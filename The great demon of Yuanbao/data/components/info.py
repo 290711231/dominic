@@ -140,7 +140,7 @@ class OverheadInfo(object):
         创建一个初始化的分数：000000"""
         # 创造分数图片列表score_images
         self.score_images = []
-        # 调用self.create_label方法获取‘000000’的美术字图集
+        # 调用self.create_label方法获取‘000000’的美术字图集并添加到self.score_images列表中
         self.create_label(self.score_images, '000000', 75, 55)
 
     def create_info_labels(self):
@@ -330,6 +330,7 @@ class OverheadInfo(object):
             self.score = level_info[c.SCORE]
             # 调用self.update_score_images方法来更新分数的图片信息
             self.update_score_images(self.score_images, self.score)
+
             # 判断level_info字典中 'level state'键指向的值是否不是'frozen'
             # 并且self.mario.state 不是 'walking to castle'
             # 并且and self.mario.state 不是 'end of level fall'
@@ -339,30 +340,54 @@ class OverheadInfo(object):
                     and not self.mario.dead:
                 # 调用self.update_count_down_clock方法来更新倒计时时间
                 self.update_count_down_clock(level_info)
+
+            # 调用self.update_coin_total方法更新金币数 并 相应的调整标签
             self.update_coin_total(level_info)
+            # 把字典level_info中 'current time'键指向的值传入self.flashing_coin.update方法来创建一个金币闪烁动画
             self.flashing_coin.update(level_info[c.CURRENT_TIME])
 
+        # 判断当前场景是否是'time out'
         elif self.state == c.TIME_OUT:
+            # self.score = 字典level_info中'score'键指向的值
             self.score = level_info[c.SCORE]
+            # 将分数图片列表self.score_images和self.score传给方法self.update_score_images，来更新分数的图片信息
             self.update_score_images(self.score_images, self.score)
+            # 调用self.update_coin_total方法更新金币数 并 相应的调整标签
             self.update_coin_total(level_info)
 
+        # 判断当前场景是否是'game over'
         elif self.state == c.GAME_OVER:
+            # self.score = 字典level_info中'score'键指向的值
             self.score = level_info[c.SCORE]
+            # 将分数图片列表self.score_images和self.score传给方法self.update_score_images，来更新分数的图片信息
             self.update_score_images(self.score_images, self.score)
+            # 调用self.update_coin_total方法更新金币数 并 相应的调整标签
             self.update_coin_total(level_info)
 
+        # 判断当前场景是否是'fast count down'
         elif self.state == c.FAST_COUNT_DOWN:
+            # 字典level_info中 'score'指向的值每次增加50（即：每次增加50分）
             level_info[c.SCORE] += 50
+            # self.score = 字典level_info中'score'键指向的值
             self.score = level_info[c.SCORE]
+            # 更新倒计时时间
             self.update_count_down_clock(level_info)
+            # 将分数图片列表self.score_images和self.score传给方法self.update_score_images，来更新分数的图片信息
             self.update_score_images(self.score_images, self.score)
+            # 调用self.update_coin_total方法更新金币数 并 相应的调整标签
             self.update_coin_total(level_info)
+            # 把字典level_info中 'current time'键指向的值传入self.flashing_coin.update方法，来创建金币闪烁动画
             self.flashing_coin.update(level_info[c.CURRENT_TIME])
+
+            #判断self.tiom 是否为 0
             if self.time == 0:
+                # 当前场景变成'end of level'
                 self.state = c.END_OF_LEVEL
 
+
+        # 判断当前场景是否是'end of level'
         elif self.state == c.END_OF_LEVEL:
+            # 把字典level_info中 'current time'键指向的值传入self.flashing_coin.update方法，来创建金币闪烁动画
             self.flashing_coin.update(level_info[c.CURRENT_TIME])
 
     def update_score_images(self, images, score):
@@ -462,21 +487,35 @@ class OverheadInfo(object):
 
         # 判断当前场景是否是'load screen'
         elif self.state == c.LOAD_SCREEN:
-            # 调用self.draw_loading_screen_info方法来绘制'load screen'的信息
+            # 调用self.draw_loading_screen_info方法来绘制载入屏幕的信息
             self.draw_loading_screen_info(surface)
 
         # 判断当前场景是否是'level'
         elif self.state == c.LEVEL:
-            #调用
+            # 调用self.draw_level_screen_info方法在常规游戏中绘制信息
             self.draw_level_screen_info(surface)
+
+        # 判断当前场景是否是'game over'
         elif self.state == c.GAME_OVER:
+            # 调用self.draw_game_over_screen_info方法来绘制游戏结束时的信息
             self.draw_game_over_screen_info(surface)
+
+        # 判断当前场景是否是'fast count down'
         elif self.state == c.FAST_COUNT_DOWN:
+            # 调用self.draw_level_screen_info方法来绘制倒计时时的信息
             self.draw_level_screen_info(surface)
+
+        # 判断当前场景是否是'end of level'
         elif self.state == c.END_OF_LEVEL:
+            # 调用self.draw_level_screen_info方法在常规游戏中绘制信息
             self.draw_level_screen_info(surface)
+
+        # 判断当前场景是否是'time out'
         elif self.state == c.TIME_OUT:
+            # 调用self.draw_time_out_screen_info方法来绘制游戏超时时的信息
             self.draw_time_out_screen_info(surface)
+
+        # 否则，跳过
         else:
             pass
 
@@ -553,54 +592,87 @@ class OverheadInfo(object):
     def draw_level_screen_info(self, surface):
         """Draws info during regular game play
         在常规游戏中绘制信息"""
-        #
+        # 遍历分数图片信息列表self.score_images
         for info in self.score_images:
+            # 在info.rect位置绘制info.image
             surface.blit(info.image, info.rect)
 
+        # 遍历倒计时图片信息列表self.count_down_images
         for digit in self.count_down_images:
+            # 在digit.rect位置绘制digit.image
             surface.blit(digit.image, digit.rect)
 
+        # 遍历金币图片信息列表self.coin_count_images
         for character in self.coin_count_images:
+            # 在character.rect位置绘制character.image
             surface.blit(character.image, character.rect)
 
+        # 遍历标签列表图片信息列表self.label_list
         for label in self.label_list:
+            # 遍历每个标签中的字符
             for letter in label:
+                # 在letter.rect位置绘制letter.image
                 surface.blit(letter.image, letter.rect)
 
+        # 在self.flashing_coin.rect位置绘制self.flashing_coin.image
         surface.blit(self.flashing_coin.image, self.flashing_coin.rect)
 
     def draw_game_over_screen_info(self, surface):
-        """Draws info when game over"""
+        """Draws info when game over
+        绘制游戏结束时候的信息"""
+        # 遍历分数图片信息列表self.score_images
         for info in self.score_images:
+            # 在info.rect位置绘制info.image
             surface.blit(info.image, info.rect)
 
+        # 遍历游戏结束标签图片信息列表self.game_over_label
         for word in self.game_over_label:
+            # 遍历每个信息里的字符
             for letter in word:
+                # 在letter.rect位置绘制letter.image
                 surface.blit(letter.image, letter.rect)
 
+        # 遍历金币图片信息列表self.coin_count_images
         for character in self.coin_count_images:
+            # 在character.rect位置绘制character.image
             surface.blit(character.image, character.rect)
 
+        # 遍历标签列表图片信息列表self.label_list
         for label in self.label_list:
+            # 遍历每个列表中的字符
             for letter in label:
+                # 在letter.rect位置绘制letter.image
                 surface.blit(letter.image, letter.rect)
 
+        # 在self.flashing_coin.rect位置绘制金币闪烁动画self.flashing_coin.image
         surface.blit(self.flashing_coin.image, self.flashing_coin.rect)
 
     def draw_time_out_screen_info(self, surface):
-        """Draws info when on the time out screen"""
+        """Draws info when on the time out screen
+        绘制超时是屏幕上的信息"""
+        # 遍历分数图片信息列表self.score_images
         for info in self.score_images:
+            # 在info.rect位置绘制info.image
             surface.blit(info.image, info.rect)
 
+        # 遍历超时标签图片信息列表
         for word in self.time_out_label:
+            # 遍历每一个列表中的字符
             for letter in word:
+                # 在letter.rect位置绘制letter.image
                 surface.blit(letter.image, letter.rect)
 
+        # 遍历金币图片信息列表
         for character in self.coin_count_images:
+            # 在character.rect位置绘制character.image
             surface.blit(character.image, character.rect)
 
+        # 遍历标签图片信息列表
         for label in self.label_list:
+            # 遍历每一个列表中的字符
             for letter in label:
+                # 在letter.rect位置绘制letter.image
                 surface.blit(letter.image, letter.rect)
 
+        # 在self.flashing_coin.rect位置绘制金币闪烁动画self.flashing_coin.image
         surface.blit(self.flashing_coin.image, self.flashing_coin.rect)
