@@ -49,11 +49,17 @@ class Level1(tools._State):
         # 实例化self.sound_manager
         self.sound_manager = game_sound.Sound(self.overhead_info_display)
 
-        #调用self.setup_background()方法
+        # 调用self.setup_background()方法设置背景图片的矩形和比例
         self.setup_background()
+        # 调用self.setup_ground() 方法来创建可碰撞且不可见的矩形，让sprites动画在上面行走
+        # 即：创建四段可行走的陆地
         self.setup_ground()
+        # 调用self.setup_pipes()方法为所有的管道创建可碰撞的位置
+        # 即地图中六个绿色的管子
         self.setup_pipes()
+        # 调用self.setup_steps()方法为所有的台阶创建可碰撞的位置
         self.setup_steps()
+        #
         self.setup_bricks()
         self.setup_coin_boxes()
         self.setup_flag_pole()
@@ -63,38 +69,51 @@ class Level1(tools._State):
         self.setup_spritegroups()
 
     def setup_background(self):
-        """Sets the background image, rect and scales it to the correct
-        proportions"""
+        """Sets the background image, rect and scales it to the correct proportions
+        设置背景图片，设定他的矩形并缩放到正确比例"""
+        # 背景图片self.background指向setup.GFX图片集字典中'level_1'键的值（即：level_1.png）
         self.background = setup.GFX['level_1']
+        # 获取背景图片的信息，并赋值给self.back_rect
         self.back_rect = self.background.get_rect()
+        # 缩放背景图片的比例（即：宽和高为原来的c.BACKGROUND_MULTIPLER倍，即2.679倍，再取整）并重新赋值给self.background
         self.background = pg.transform.scale(self.background,
                                              (int(self.back_rect.width * c.BACKGROUND_MULTIPLER),
                                               int(self.back_rect.height * c.BACKGROUND_MULTIPLER)))
+        # 重新将self.background的信息赋值给self.back_rect
         self.back_rect = self.background.get_rect()
+        # 提取背景图片信息中的宽高
         width = self.back_rect.width
         height = self.back_rect.height
 
+        # 用背景图片的宽高传给Surface类，来实例化self.level对象，且不具有透明通道
         self.level = pg.Surface((width, height)).convert()
+        # 获取self.level对象的坐标和宽高信息
         self.level_rect = self.level.get_rect()
+        # 获取屏幕的坐标和宽高信息，底部和self.level_rect对齐，并赋值给self.viewport
         self.viewport = setup.SCREEN.get_rect(bottom=self.level_rect.bottom)
+        # self.viewport的x轴坐标指向字典self.game_info中'camera start x'键的值
         self.viewport.x = self.game_info[c.CAMERA_START_X]
 
     def setup_ground(self):
-        """Creates collideable, invisible rectangles over top of the ground for
-        sprites to walk on"""
+        """Creates collideable, invisible rectangles over top of the ground for sprites to walk on
+        创建可碰撞且不可见的矩形，让sprites动画在上面运行"""
+        # 给collider.Collider传值，来实例化四个对象（即：四段可行走的地面坐标）
         ground_rect1 = collider.Collider(0, c.GROUND_HEIGHT, 2953, 60)
         ground_rect2 = collider.Collider(3048, c.GROUND_HEIGHT, 635, 60)
         ground_rect3 = collider.Collider(3819, c.GROUND_HEIGHT, 2735, 60)
         ground_rect4 = collider.Collider(6647, c.GROUND_HEIGHT, 2300, 60)
 
+        # 背景位置信息列表self.ground_group为以上四个元素依次组成
         self.ground_group = pg.sprite.Group(ground_rect1,
                                             ground_rect2,
                                             ground_rect3,
                                             ground_rect4)
 
     def setup_pipes(self):
-        """Create collideable rects for all the pipes"""
+        """Create collideable rects for all the pipes
+        为所有的管道创建可碰撞的位置"""
 
+        # 给collider.Collider传值，来实例化六个对象（即：地图里六个管子）
         pipe1 = collider.Collider(1202, 452, 83, 82)
         pipe2 = collider.Collider(1631, 409, 83, 140)
         pipe3 = collider.Collider(1973, 366, 83, 170)
@@ -102,33 +121,41 @@ class Level1(tools._State):
         pipe5 = collider.Collider(6989, 452, 83, 82)
         pipe6 = collider.Collider(7675, 452, 83, 82)
 
+        # 管道的位置信息列表self.pipe_group为以上六个元素依次组成
         self.pipe_group = pg.sprite.Group(pipe1, pipe2,
                                           pipe3, pipe4,
                                           pipe5, pipe6)
 
     def setup_steps(self):
-        """Create collideable rects for all the steps"""
+        """Create collideable rects for all the steps
+        为所有的台阶创建创建可碰撞的位置"""
+        # 给collider.Collider传值，来实例化以下所有的对象（即：地图里所有的台阶）
+        # 在路上，夹住的台阶左侧
         step1 = collider.Collider(5745, 495, 40, 44)
         step2 = collider.Collider(5788, 452, 40, 44)
         step3 = collider.Collider(5831, 409, 40, 44)
         step4 = collider.Collider(5874, 366, 40, 176)
 
+        # 在路上，夹住的台阶右侧
         step5 = collider.Collider(6001, 366, 40, 176)
         step6 = collider.Collider(6044, 408, 40, 40)
         step7 = collider.Collider(6087, 452, 40, 40)
         step8 = collider.Collider(6130, 495, 40, 40)
 
+        # 夹在悬崖两侧的台阶左侧
         step9 = collider.Collider(6345, 495, 40, 40)
         step10 = collider.Collider(6388, 452, 40, 40)
         step11 = collider.Collider(6431, 409, 40, 40)
         step12 = collider.Collider(6474, 366, 40, 40)
         step13 = collider.Collider(6517, 366, 40, 176)
 
+        # 夹在悬崖两侧的台阶右侧
         step14 = collider.Collider(6644, 366, 40, 176)
         step15 = collider.Collider(6687, 408, 40, 40)
         step16 = collider.Collider(6728, 452, 40, 40)
         step17 = collider.Collider(6771, 495, 40, 40)
 
+        # 旗杆前最高的台阶
         step18 = collider.Collider(7760, 495, 40, 40)
         step19 = collider.Collider(7803, 452, 40, 40)
         step20 = collider.Collider(7845, 409, 40, 40)
@@ -139,8 +166,10 @@ class Level1(tools._State):
         step25 = collider.Collider(8060, 194, 40, 40)
         step26 = collider.Collider(8103, 194, 40, 360)
 
+        # 旗杆处的台阶
         step27 = collider.Collider(8488, 495, 40, 40)
 
+        # 台阶位置信息列表self.step_group为以上所有元素依次组成
         self.step_group = pg.sprite.Group(step1, step2,
                                           step3, step4,
                                           step5, step6,
@@ -158,11 +187,17 @@ class Level1(tools._State):
 
     def setup_bricks(self):
         """Creates all the breakable bricks for the level.  Coin and
-        powerup groups are created so they can be passed to bricks."""
+        powerup groups are created so they can be passed to bricks.
+        为关卡创建所有可被打碎的砖块。创建金币组和能量组，以便传递给砖块"""
+        # 用pg.sprite.Group()来实例化对象self.coin_group，self.powerup_group 和 self.brick_pieces_group
         self.coin_group = pg.sprite.Group()
         self.powerup_group = pg.sprite.Group()
         self.brick_pieces_group = pg.sprite.Group()
 
+        # 将坐标信息 和 部分的金币及能量信息 传递给bricks.Brick类
+        # 用以实例化以下这些被可被摧毁的砖块，和隐藏能量和金币的砖块
+        # 真多。。。。。这办法显得有点老土。。。但是应该比较管用。。。
+        # 如果能做个编辑器直接绘制添加矩形，然后摆放位置，最后获取每个矩形的rect就好了。。。后续做吧。。。
         brick1 = bricks.Brick(858, 365)
         brick2 = bricks.Brick(944, 365)
         brick3 = bricks.Brick(1030, 365)

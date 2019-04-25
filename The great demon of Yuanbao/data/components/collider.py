@@ -6,7 +6,7 @@ from .. import constants as c
 
 class Collider(pg.sprite.Sprite):
     """Invisible sprites placed overtop background parts that can be collided with (pipes, steps, ground, etc.
-    不可见的sprites放置在超出背景部分，可能会与之（管道，台阶，地面等）碰撞"""
+    放置在背景部分的，可与之（管道，台阶，地面等）碰撞的不可见的sprites动画"""
 
     def __init__(self, x, y, width, height, name='collider'):
         pg.sprite.Sprite.__init__(self)
