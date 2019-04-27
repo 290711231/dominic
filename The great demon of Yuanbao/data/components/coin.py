@@ -7,7 +7,8 @@ from . import score
 
 
 class Coin(pg.sprite.Sprite):
-    """Coins found in boxes and bricks"""
+    """Coins found in boxes and bricks
+    在盒子和砖头中找到的金币"""
     def __init__(self, x, y, score_group):
         pg.sprite.Sprite.__init__(self)
         self.sprite_sheet = setup.GFX['item_objects']

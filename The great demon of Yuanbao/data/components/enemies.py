@@ -132,9 +132,12 @@ class Enemy(pg.sprite.Sprite):
 
 
 class Goomba(Enemy):
+    '''敌人Goomba类
+    继承自Enemy类'''
 
     def __init__(self, y=c.GROUND_HEIGHT, x=0, direction=c.LEFT, name='goomba'):
         Enemy.__init__(self)
+        # 调用self.setup_enemy方法，
         self.setup_enemy(x, y, direction, name, self.setup_frames)
 
 

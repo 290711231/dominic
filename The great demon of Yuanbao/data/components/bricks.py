@@ -34,11 +34,15 @@ class Brick(pg.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
-        #
+        # 从self.image中返回一个遮罩对象
         self.mask = pg.mask.from_surface(self.image)
+        #
         self.bumped_up = False
+        # 把y值赋给self.rest_height
         self.rest_height = y
+        # 当前场景为'resting'
         self.state = c.RESTING
+        # 定义变量
         self.y_vel = 0
         self.gravity = 1.2
         self.name = name
@@ -74,19 +78,28 @@ class Brick(pg.sprite.Sprite):
         self.frames.append(self.get_image(432, 0, 16, 16))
 
     def setup_contents(self):
-        """Put 6 coins in contents if needed"""
+        """Put 6 coins in contents if needed
+        如果需要的话放6个金币进去"""
+        # 判断self.contents 是否是'6coins'
         if self.contents == '6coins':
+            # self.coin_total属性 = 6
             self.coin_total = 6
         else:
+            # self.coin_total属性 = 0
             self.coin_total = 0
 
     def update(self):
-        """Updates the brick"""
+        """Updates the brick
+        更新砖块状态"""
+        # 调用self.handle_states方法
         self.handle_states()
 
     def handle_states(self):
-        """Determines brick behavior based on state"""
+        """Determines brick behavior based on state
+        根据状态来确定砖块的行为"""
+        # 判断当前状态是否为'resting'
         if self.state == c.RESTING:
+            # 调用self.resting方法
             self.resting()
         elif self.state == c.BUMPED:
             self.bumped()
@@ -94,55 +107,94 @@ class Brick(pg.sprite.Sprite):
             self.opened()
 
     def resting(self):
-        """State when not moving"""
+        """State when not moving
+        当不移动时候的状态"""
+        # 判断self.contents是否是'6coins'
         if self.contents == '6coins':
+            # 判断if self.coin_total 是否是 0
             if self.coin_total == 0:
-                self.state == c.OPENED
+                # 当前状态为'opened'
+                self.state = c.OPENED
 
     def bumped(self):
-        """Action during a BUMPED state"""
+        """Action during a BUMPED state
+        在碰撞状态中的操作"""
+        # 对象的y轴位置 + 运动速度的结果，重新赋值给对象的y轴坐标
         self.rect.y += self.y_vel
+        # 对象的运动速度 + 重力值（1.2）的结果，重新赋值给运动速度（即：形成加速度）
         self.y_vel += self.gravity
 
+        # 判断对象的y轴坐标是否大于self.rest_height+5
         if self.rect.y >= (self.rest_height + 5):
+            # 将self.rest_height赋值给对象的y轴坐标
             self.rect.y = self.rest_height
+            # 判断对象的内容self.contents是否是'star'（即：砖块里是否隐藏着星星）
             if self.contents == 'star':
+                # 当前状态变成'opened'
                 self.state = c.OPENED
+            # 判断对象的内容self.contents是否是'6coins'（即：砖块里是否隐藏着6个金币）
             elif self.contents == '6coins':
+                # 判断金币数self.coin_total是否为 0
                 if self.coin_total == 0:
+                    # 当前状态变成'opened'
                     self.state = c.OPENED
+                # 否则
                 else:
+                    # 当前状态为'resting'
                     self.state = c.RESTING
+            # 否则
             else:
+                # 当前状态为'resting'
                 self.state = c.RESTING
 
     def start_bump(self, score_group):
-        """Transitions brick into BUMPED state"""
+        """Transitions brick into BUMPED state
+        转换砖块进入碰撞状态"""
+        # 设置速度为 -6
         self.y_vel = -6
 
+        # 判断对象的内容self.contents是否为'6coins'
         if self.contents == '6coins':
+            # 播放声音合集字典里'coin'键指向的值（即：coin.ogg）
             setup.SFX['coin'].play()
 
+            # 判断金币数self.coin_total 是否大于0
             if self.coin_total > 0:
+                # 将位置，内容，y轴坐标和分数列表传入coin.Coin，将实例化后的对象添加到self.group中
                 self.group.add(coin.Coin(self.rect.centerx, self.rect.y, score_group))
+                # 金币数self.coin_total -1
                 self.coin_total -= 1
+                # 判断金币数self.coin_total 是否为0
                 if self.coin_total == 0:
+                    # 帧索引 =1
                     self.frame_index = 1
+                    # 将帧中这索引指向的图片赋值给self.image
                     self.image = self.frames[self.frame_index]
+        # 判断内容self.contents 是否是'star'（即：砖头里是否是星星）
         elif self.contents == 'star':
+            # 播放音乐合集中'powerup_appears'指向的值（即：powerup_appears.ogg）
             setup.SFX['powerup_appears'].play()
+            # 帧索引 = 1
             self.frame_index = 1
+            # 将帧中这索引指向的图片赋值给self.image
             self.image = self.frames[self.frame_index]
 
+        # 当前状态变成c.BUMPED 即：'bumped'
         self.state = c.BUMPED
 
     def opened(self):
-        """Action during OPENED state"""
+        """Action during OPENED state
+        opened状态下的行为"""
+        # 帧索引 = 1
         self.frame_index = 1
+        # 将帧中这索引指向的图片赋值给self.image
         self.image = self.frames[self.frame_index]
 
+        # 判断内容self.contents是否为'star' 并且self.powerup_in_box是否为 True
         if self.contents == 'star' and self.powerup_in_box:
+            # 将参数（中心位置的x坐标和self.rect_height）传入powerups.Star类，并将实例化的对象添加到self.group中
             self.group.add(powerups.Star(self.rect.centerx, self.rest_height))
+            # self.powerup_in_box 变成 False
             self.powerup_in_box = False
 
 

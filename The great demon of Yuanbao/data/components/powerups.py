@@ -6,26 +6,39 @@ from .. import setup
 
 
 class Powerup(pg.sprite.Sprite):
-    """Base class for all powerup_group"""
+    """Base class for all powerup_group
+    所有powerup_group类的基类"""
     def __init__(self, x, y):
         super(Powerup, self).__init__()
 
 
     def setup_powerup(self, x, y, name, setup_frames):
         """This separate setup function allows me to pass a different
-        setup_frames method depending on what the powerup is"""
+        setup_frames method depending on what the powerup is
+        这个单独的setup函数，允许我根据powerup是什么来判断传递不同的setup_frames方法。"""
+        # self.sprite_sheet 指向图片材质集字典中'item_objects'键指向的值（即：item_objects,png）
         self.sprite_sheet = setup.GFX['item_objects']
+        # 定义帧列表
         self.frames = []
+        # 定义帧索引
         self.frame_index = 0
+        # 调用setup_frames()来添加帧列表里的内容
         setup_frames()
+        # 将帧列表中帧索引指向的值赋给self.image
         self.image = self.frames[self.frame_index]
+        # 获取image的坐标和位置信息
         self.rect = self.image.get_rect()
+        # 重新赋值给self.rect.centerx 和self.rect
         self.rect.centerx = x
         self.rect.y = y
+        # 当前状态为'reveal'
         self.state = c.REVEAL
+        # 设置xy的速度
         self.y_vel = -1
         self.x_vel = 0
+        # 移动朝向self.direction为'right'
         self.direction = c.RIGHT
+        # 定义变量
         self.box_height = y
         self.gravity = 1
         self.max_y_vel = 8
@@ -34,24 +47,33 @@ class Powerup(pg.sprite.Sprite):
 
 
     def get_image(self, x, y, width, height):
-        """Get the image frames from the sprite sheet"""
+        """Get the image frames from the sprite sheet
+        从sprite材质集中获取图片帧"""
 
+        # 向pygeme.Surface传入参数,来实例化对象image，且没有alpha通道
         image = pg.Surface([width, height]).convert()
+        # 获取image的位置和宽高信息
         rect = image.get_rect()
 
+        # 绘制image
         image.blit(self.sprite_sheet, (0, 0), (x, y, width, height))
+        # 将image中rgb为（0,0,0）的颜色（即：黑色）设置成透明
         image.set_colorkey(c.BLACK)
 
-
+        # 将image缩放成原来的c.SIZE_MULTIPLIER倍（即：2.5倍），并重新赋值给image对象
         image = pg.transform.scale(image,
                                    (int(rect.width*c.SIZE_MULTIPLIER),
                                     int(rect.height*c.SIZE_MULTIPLIER)))
+        # 返回image对象
         return image
 
 
     def update(self, game_info, *args):
-        """Updates powerup behavior"""
+        """Updates powerup behavior
+        更新powerup行为"""
+        # 当前时间 = 字典game_info中c.CURRENT_TIME（即：'current time'）指向的值
         self.current_time = game_info[c.CURRENT_TIME]
+        # 调用self.handle_state()函数
         self.handle_state()
 
 
@@ -60,26 +82,40 @@ class Powerup(pg.sprite.Sprite):
 
 
     def revealing(self, *args):
-        """Action when powerup leaves the coin box or brick"""
+        """Action when powerup leaves the coin box or brick
+        当powerup离开盒子或者砖块时候的行为"""
+        # y轴的坐标位置 + 速度的结果重新赋值给 y轴坐标
         self.rect.y += self.y_vel
 
+        # 判断底部位置是否小于等于盒子的高
         if self.rect.bottom <= self.box_height:
+            # 底部位置 = 盒子的高
             self.rect.bottom = self.box_height
+            # y轴速度 = 0
             self.y_vel = 0
+            # 当前状态为'slide'
             self.state = c.SLIDE
 
 
     def sliding(self):
-        """Action for when powerup slides along the ground"""
+        """Action for when powerup slides along the ground
+        当powerup沿着地面滑行时候的动作"""
+        # 判断朝向self.direction是否为'right'
         if self.direction == c.RIGHT:
+            # x速度 = 3
             self.x_vel = 3
+        # 否则
         else:
+            # x速度 = -3
             self.x_vel = -3
 
 
     def falling(self):
-        """When powerups fall of a ledge"""
+        """When powerups fall of a ledge
+        当powerup从台子上掉下来的时候"""
+        # 判断y轴的速度是否小于8
         if self.y_vel < self.max_y_vel:
+            # y轴的速度 + 重力（即：1）的结果重新赋值给y轴速度，即加速
             self.y_vel += self.gravity
 
 
@@ -171,7 +207,9 @@ class FireFlower(Powerup):
 
 
 class Star(Powerup):
-    """A powerup that gives mario invincibility"""
+    """A powerup that gives mario invincibility
+    一个让马里奥无敌的升级
+    继承自 Powerup 类"""
     def __init__(self, x, y, name='star'):
         super(Star, self).__init__(x, y)
         self.setup_powerup(x, y, name, self.setup_frames)

@@ -32,7 +32,7 @@ class Level1(tools._State):
         # 将False赋给字典self.game_info中 'mario dead'键指向的值
         self.game_info[c.MARIO_DEAD] = False
 
-        # 定义场景为'not frozen'
+        # 定义状态为'not frozen'
         self.state = c.NOT_FROZEN
         # 定义各个变量
         self.death_timer = 0
@@ -59,9 +59,14 @@ class Level1(tools._State):
         self.setup_pipes()
         # 调用self.setup_steps()方法为所有的台阶创建可碰撞的位置
         self.setup_steps()
-        #
+        # 调用self.setup_bricks()方法
+        # 为关卡创建所有可被打碎的砖块。创建金币组和能量组，以便传递给砖块
         self.setup_bricks()
+        # 调用self.setup_coin_boxes()方法
+        # 创建所有的金币盒子并把它们放到一个sprite组里
         self.setup_coin_boxes()
+        # 调用self.setup_flag_pole()方法
+        #
         self.setup_flag_pole()
         self.setup_enemies()
         self.setup_mario()
@@ -230,6 +235,7 @@ class Level1(tools._State):
         brick30 = bricks.Brick(7245, 365)
         brick31 = bricks.Brick(7331, 365)
 
+        # 调用pygeme.sprite.Group类用以上可摧毁的砖块信息建立一个sprite组
         self.brick_group = pg.sprite.Group(brick1, brick2,
                                            brick3, brick4,
                                            brick5, brick6,
@@ -248,7 +254,10 @@ class Level1(tools._State):
                                            brick31)
 
     def setup_coin_boxes(self):
-        """Creates all the coin boxes and puts them in a sprite group"""
+        """Creates all the coin boxes and puts them in a sprite group
+        创建所有的金币盒子并把它们放到一个sprite组里"""
+
+        # 将参数（坐标，内容和sprite组）传入coin_box.Coin_box类，并实例化以下对象
         coin_box1 = coin_box.Coin_box(685, 365, c.COIN, self.coin_group)
         coin_box2 = coin_box.Coin_box(901, 365, c.MUSHROOM, self.powerup_group)
         coin_box3 = coin_box.Coin_box(987, 365, c.COIN, self.coin_group)
@@ -262,6 +271,7 @@ class Level1(tools._State):
         coin_box11 = coin_box.Coin_box(5531, 193, c.COIN, self.coin_group)
         coin_box12 = coin_box.Coin_box(7288, 365, c.COIN, self.coin_group)
 
+        # 用以上实例化的对象创建一个sprite组self.coin_box_group
         self.coin_box_group = pg.sprite.Group(coin_box1, coin_box2,
                                               coin_box3, coin_box4,
                                               coin_box5, coin_box6,
@@ -270,9 +280,12 @@ class Level1(tools._State):
                                               coin_box11, coin_box12)
 
     def setup_flag_pole(self):
-        """Creates the flag pole at the end of the level"""
+        """Creates the flag pole at the end of the level
+        创建关卡结束时的旗杆"""
+        # 将坐标传入flagpole.Flag类，来实例化一个旗子对象self.flag
         self.flag = flagpole.Flag(8505, 100)
 
+        # 将坐标传入flagpole.Pole类，来实例化出10个旗杆对象
         pole0 = flagpole.Pole(8505, 97)
         pole1 = flagpole.Pole(8505, 137)
         pole2 = flagpole.Pole(8505, 177)
@@ -284,8 +297,10 @@ class Level1(tools._State):
         pole8 = flagpole.Pole(8505, 417)
         pole9 = flagpole.Pole(8505, 450)
 
+        # 将坐标传入flagpole.Finial类，来实例化一个旗杆顶部的对象finial
         finial = flagpole.Finial(8507, 97)
 
+        # 将以上所有对象传入pygame.sprite.Group对象来实例化一个sprite组self.flag_pole_group
         self.flag_pole_group = pg.sprite.Group(self.flag,
                                                finial,
                                                pole0,
@@ -300,7 +315,9 @@ class Level1(tools._State):
                                                pole9)
 
     def setup_enemies(self):
-        """Creates all the enemies and stores them in a list of lists."""
+        """Creates all the enemies and stores them in a list of lists.
+        创建所有敌人并且将他们储存在一个列表中"""
+
         goomba0 = enemies.Goomba()
         goomba1 = enemies.Goomba()
         goomba2 = enemies.Goomba()
